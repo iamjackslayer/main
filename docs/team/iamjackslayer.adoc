@@ -1,4 +1,4 @@
-= Jack Wong Project Portfolio
+= Jack Wong - Project Portfolio
 :site-section: AboutUs
 :imagesDir: ../images
 :stylesDir: ../stylesheets
