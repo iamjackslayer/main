@@ -47,6 +47,7 @@ Lastly, I am the main tester of ClinicIO. I ensure all the components are integr
 ** *What it does:* It determines which patient in the queue to go for consultation based on his/her preference for any doctor.
 ** *Justification:* This feature serves the need of many patients who opt for a specific doctor for consultation. It ensures fairness by prioritising patients who arrive earlier.
 ** *Activity diagram for selecting a patient for consultation:* +
+
 image::popqueue.png[]
 
 ==== 2.4 Major enhancement 4 - added the ability to show all patients currently in the queue:
@@ -61,6 +62,7 @@ image::popqueue.png[]
 ** *Justification:* This feature is crucial because it allows the receptionist to store all relevant information associated with a patient into our database. This allows the receptionist to easily query a patient given some information about the patient.
 ** *Highlight:* This patient model is designed to scale, that is, when the clinic requires to add more information or attributes of a patient, the feature can be easily implemented without affecting the existing database.
 ** *Class diagram for a patient:* +
+
 image::patientmodel.png[]
 
 
