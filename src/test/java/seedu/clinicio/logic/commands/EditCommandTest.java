@@ -3,6 +3,7 @@ package seedu.clinicio.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.clinicio.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.clinicio.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.clinicio.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -11,6 +12,7 @@ import static seedu.clinicio.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.clinicio.logic.commands.CommandTestUtil.showPersonAtIndex;
+
 import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.clinicio.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.clinicio.testutil.TypicalPersons.getTypicalClinicIo;
@@ -19,16 +21,18 @@ import org.junit.Test;
 
 import seedu.clinicio.commons.core.Messages;
 import seedu.clinicio.commons.core.index.Index;
+
 import seedu.clinicio.logic.CommandHistory;
 import seedu.clinicio.logic.commands.EditCommand.EditPersonDescriptor;
+
 import seedu.clinicio.model.ClinicIo;
 import seedu.clinicio.model.Model;
 import seedu.clinicio.model.ModelManager;
 import seedu.clinicio.model.UserPrefs;
 import seedu.clinicio.model.analytics.Analytics;
 import seedu.clinicio.model.person.Person;
+
 import seedu.clinicio.testutil.EditPersonDescriptorBuilder;
-import seedu.clinicio.testutil.PatientBuilder;
 import seedu.clinicio.testutil.PersonBuilder;
 
 /**
@@ -42,7 +46,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Person editedPerson = new PatientBuilder().build();
+        Person editedPerson = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
@@ -60,7 +64,7 @@ public class EditCommandTest {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
         Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
-        PersonBuilder personInList = PatientBuilder.buildFromPerson(lastPerson);
+        PersonBuilder personInList = new PersonBuilder(lastPerson);
         Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
@@ -95,7 +99,7 @@ public class EditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = PatientBuilder.buildFromPerson(personInFilteredList).withName(VALID_NAME_BOB).build();
+        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 

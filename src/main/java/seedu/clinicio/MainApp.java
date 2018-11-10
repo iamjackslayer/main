@@ -192,7 +192,7 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
-        UserSession.destorySession();
+        UserSession.destroy();
         Platform.exit();
         System.exit(0);
     }

@@ -8,6 +8,8 @@ import seedu.clinicio.logic.commands.exceptions.CommandException;
 import seedu.clinicio.model.analytics.StatisticType;
 import seedu.clinicio.model.appointment.Appointment;
 import seedu.clinicio.model.consultation.Consultation;
+import seedu.clinicio.model.medicine.Medicine;
+import seedu.clinicio.model.medicine.MedicineQuantity;
 import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.person.Person;
 import seedu.clinicio.model.staff.Staff;
@@ -38,6 +40,9 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Consultation> PREDICATE_SHOW_ALL_CONSULTATIONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Medicine> PREDICATE_SHOW_ALL_MEDICINES = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyClinicIo newData);
@@ -298,4 +303,43 @@ public interface Model {
      * Returns feedback message for user.
      */
     String exportPatientsConsultations();
+
+    //@@author aaronseahyh
+    /**
+     * Returns true if a medicine with the same identity as {@code medicine} exists in the medicine inventory.
+     */
+    boolean hasMedicine(Medicine medicine);
+
+    //@@author aaronseahyh
+    /**
+     * Deletes the given medicine.
+     * The medicine must exist in the medicine inventory.
+     */
+    void deleteMedicine(Medicine medicine);
+
+    //@@author aaronseahyh
+    /**
+     * Adds the given medicine.
+     * {@code medicine} must not already exist in the medicine inventory.
+     */
+    void addMedicine(Medicine medicine);
+
+    //@@author aaronseahyh
+    /**
+     * Replaces the quantity of target medicine {@code target} with {@code newQuantity}.
+     * {@code target} must exist in the medicine inventory.
+     */
+    void updateMedicineQuantity(Medicine target, MedicineQuantity newQuantity);
+
+    //@@author aaronseahyh
+    /** Returns an unmodifiable view of the filtered medicine list */
+    ObservableList<Medicine> getFilteredMedicineList();
+
+    //@@author aaronseahyh
+    /**
+     * Updates the filter of the filtered medicine list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredMedicineList(Predicate<Medicine> predicate);
+
 }

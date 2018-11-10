@@ -9,7 +9,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.clinicio.model.patient.exceptions.DuplicatePatientException;
-import seedu.clinicio.model.person.exceptions.PersonNotFoundException;
+import seedu.clinicio.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * A list of patients that enforces uniqueness between its elements and does not allow nulls.
@@ -58,7 +58,7 @@ public class UniquePatientList implements Iterable<Patient> {
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new PatientNotFoundException();
         }
 
         if (!target.isSamePatient(editedPatient) && contains(editedPatient)) {
@@ -77,7 +77,7 @@ public class UniquePatientList implements Iterable<Patient> {
     public void remove(Patient toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new PersonNotFoundException();
+            throw new PatientNotFoundException();
         }
     }
 

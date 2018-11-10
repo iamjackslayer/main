@@ -301,7 +301,7 @@ public class ParserUtil {
         requireNonNull(allergy);
         String trimmedAllergy = allergy.trim();
         if (!Allergy.isValidAllergy(trimmedAllergy)) {
-            throw new ParseException(MedicalProblem.MESSAGE_MED_PROB_CONSTRAINTS);
+            throw new ParseException(Allergy.MESSAGE_ALLERGY_CONSTRAINTS);
         }
         return new Allergy(trimmedAllergy);
     }

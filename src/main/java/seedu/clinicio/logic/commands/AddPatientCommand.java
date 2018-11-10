@@ -26,6 +26,7 @@ public class AddPatientCommand extends Command {
 
     public static final String COMMAND_WORD = "addpatient";
 
+    public static final String MESSAGE_NOT_LOGIN = "You are not logged in as a receptionist";
     public static final String MESSAGE_DUPLICATE_PATIENT = "This patient already exists in the ClinicIO";
     public static final String MESSAGE_SUCCESS = "New patient added: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient to the ClinicIO. "
@@ -60,8 +61,8 @@ public class AddPatientCommand extends Command {
             throws CommandException {
         requireNonNull(model);
 
-        if (UserSession.isLogin()) {
-            throw new CommandException("");
+        if (!UserSession.isLogin()) {
+            throw new CommandException(MESSAGE_NOT_LOGIN);
         } else if (model.hasPatient(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PATIENT);
         }

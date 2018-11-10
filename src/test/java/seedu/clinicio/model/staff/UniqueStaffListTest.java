@@ -33,24 +33,24 @@ public class UniqueStaffListTest {
     private final UniqueStaffList uniqueStaffList = new UniqueStaffList();
 
     @Test
-    public void contains_nullDoctor_throwsNullPointerException() {
+    public void contains_nullStaff_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         uniqueStaffList.contains(null);
     }
 
     @Test
-    public void contains_doctorNotInList_returnsFalse() {
+    public void contains_staffNotInList_returnsFalse() {
         assertFalse(uniqueStaffList.contains(ADAM));
     }
 
     @Test
-    public void contains_doctorInList_returnsTrue() {
+    public void contains_staffInList_returnsTrue() {
         uniqueStaffList.add(ADAM);
         assertTrue(uniqueStaffList.contains(ADAM));
     }
 
     @Test
-    public void contains_doctorWithSameIdentityFieldsInList_returnsTrue() {
+    public void contains_staffWithSameIdentityFieldsInList_returnsTrue() {
         uniqueStaffList.add(ADAM);
         Staff editedAdam = new StaffBuilder(ADAM).withName(VALID_NAME_ADAM)
                 .build();
@@ -58,38 +58,38 @@ public class UniqueStaffListTest {
     }
 
     @Test
-    public void add_nullDoctor_throwsNullPointerException() {
+    public void add_nullStaff_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         uniqueStaffList.add(null);
     }
 
     @Test
-    public void add_duplicateDoctor_throwsDuplicateDoctorException() {
+    public void add_duplicateStaff_throwsDuplicateStaffException() {
         uniqueStaffList.add(ADAM);
         thrown.expect(DuplicateStaffException.class);
         uniqueStaffList.add(ADAM);
     }
 
     @Test
-    public void setDoctor_nullTargetDoctor_throwsNullPointerException() {
+    public void setStaff_nullTargetStaff_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         uniqueStaffList.setStaff(null, ADAM);
     }
 
     @Test
-    public void setDoctor_nullEditedDoctor_throwsNullPointerException() {
+    public void setStaff_nullEditedStaff_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         uniqueStaffList.setStaff(ADAM, null);
     }
 
     @Test
-    public void setDoctor_targetDoctorNotInList_throwsDoctorNotFoundException() {
+    public void setStaff_targetStaffNotInList_throwsStaffNotFoundException() {
         thrown.expect(StaffNotFoundException.class);
         uniqueStaffList.setStaff(ADAM, ADAM);
     }
 
     @Test
-    public void setDoctor_editedDoctorIsSameDoctor_success() {
+    public void setStaff_editedStaffIsSameStaff_success() {
         uniqueStaffList.add(ADAM);
         uniqueStaffList.setStaff(ADAM, ADAM);
         UniqueStaffList expectedUniqueStaffList = new UniqueStaffList();
@@ -98,7 +98,7 @@ public class UniqueStaffListTest {
     }
 
     @Test
-    public void setDoctor_editedDoctorHasSameIdentity_success() {
+    public void setStaff_editedStaffHasSameIdentity_success() {
         uniqueStaffList.add(ADAM);
         Staff editedAdam = new StaffBuilder(ADAM).withPassword(HashUtil.hashToString(VALID_PASSWORD_ADAM), true)
                 .build();
@@ -118,7 +118,7 @@ public class UniqueStaffListTest {
     }
 
     @Test
-    public void setStaff_editedStaffHasNonUniqueIdentity_throwsDuplicateDoctorException() {
+    public void setStaff_editedStaffHasNonUniqueIdentity_throwsDuplicateStaffException() {
         uniqueStaffList.add(ADAM);
         uniqueStaffList.add(BEN);
         thrown.expect(DuplicateStaffException.class);
@@ -132,7 +132,7 @@ public class UniqueStaffListTest {
     }
 
     @Test
-    public void remove_staffDoesNotExist_throwsDoctorNotFoundException() {
+    public void remove_staffDoesNotExist_throwsStaffNotFoundException() {
         thrown.expect(StaffNotFoundException.class);
         uniqueStaffList.remove(ADAM);
     }
@@ -152,7 +152,7 @@ public class UniqueStaffListTest {
     }
 
     @Test
-    public void setStaffs_uniqueStaffList_replacesOwnListWithProvidedUniqueDoctorList() {
+    public void setStaffs_uniqueStaffList_replacesOwnListWithProvidedUniqueStaffList() {
         uniqueStaffList.add(ADAM);
         UniqueStaffList expectedUniqueStaffList = new UniqueStaffList();
         expectedUniqueStaffList.add(BEN);
@@ -177,7 +177,7 @@ public class UniqueStaffListTest {
     }
 
     @Test
-    public void setStaffs_listWithDuplicateStaffs_throwsDuplicateDoctorException() {
+    public void setStaffs_listWithDuplicateStaffs_throwsDuplicateStaffException() {
         List<Staff> listWithDuplicateStaffs = Arrays.asList(ADAM, ADAM);
         thrown.expect(DuplicateStaffException.class);
         uniqueStaffList.setStaffs(listWithDuplicateStaffs);

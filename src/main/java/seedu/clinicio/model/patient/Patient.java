@@ -31,7 +31,10 @@ public class Patient extends Person {
 
     public static final String DEFAULT_NRIC = "S1234567A";
 
+    // Identity fields
     private final Nric nric;
+
+    // Data fields
     private Set<MedicalProblem> medicalProblems;
     private Set<Medication> medications;
     private Set<Allergy> allergies;
@@ -53,6 +56,22 @@ public class Patient extends Person {
         medications = new HashSet<>();
         allergies = new HashSet<>();
         preferredDoctor = Optional.empty();
+        appointment = Optional.empty();
+        appointmentHistory = new ArrayList<>();
+        consultationHistory = new ArrayList<>();
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Patient(Person person, Nric nric, Set<MedicalProblem> medicalProblems, Set<Medication> medications,
+            Set<Allergy> allergies) {
+        super(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), new HashSet<>());
+        this.nric = nric;
+        this.medicalProblems = medicalProblems;
+        this.medications = medications;
+        this.allergies = allergies;
+        this.preferredDoctor = Optional.empty();
         appointment = Optional.empty();
         appointmentHistory = new ArrayList<>();
         consultationHistory = new ArrayList<>();
@@ -89,19 +108,6 @@ public class Patient extends Person {
         appointment = Optional.empty();
         appointmentHistory = new ArrayList<>();
         consultationHistory = new ArrayList<>();
-    }
-
-    /**
-     * Contructs a patient from a given person.
-     * @param person
-     */
-    public static Patient buildFromPerson(Person person) {
-        Name name = person.getName();
-        Phone phone = person.getPhone();
-        Email email = person.getEmail();
-        Address address = person.getAddress();
-        Set<Tag> tags = person.getTags();
-        return new Patient(name, phone, email, address, tags);
     }
 
     public Nric getNric() {
@@ -170,7 +176,7 @@ public class Patient extends Person {
     public void setPreferredDoctor(Staff staff) {
         requireNonNull(staff);
 
-        preferredDoctor = Optional.of(staff);
+        preferredDoctor = Optional.ofNullable(staff);
     }
 
     /**
@@ -180,7 +186,7 @@ public class Patient extends Person {
     public void setAppointment(Appointment appointment) {
         requireNonNull(appointment);
         appointmentHistory.add(appointment);
-        this.appointment = Optional.of(appointment);
+        this.appointment = Optional.ofNullable(appointment);
     }
 
     /**
@@ -238,8 +244,7 @@ public class Patient extends Person {
                 && other.getName().equals(getName())
                 && other.getNric().equals(getNric())
                 && (other.getPhone().equals(getPhone()) || other.getEmail().equals(getEmail()))
-                && other.getPreferredDoctor().equals(getPreferredDoctor())
-                && other.getAppointment().equals(getAppointment());
+                && other.getPreferredDoctor().equals(getPreferredDoctor());
 
         return isSame;
     }
@@ -272,9 +277,10 @@ public class Patient extends Person {
                 && otherPatient.getPhone().equals(getPhone())
                 && otherPatient.getEmail().equals(getEmail())
                 && otherPatient.getAddress().equals(getAddress())
-                && otherPatient.getTags().equals(getTags())
-                && otherPatient.getPreferredDoctor().equals(getPreferredDoctor())
-                && otherPatient.getAppointment().equals(getAppointment());
+                && otherPatient.getMedicalProblems().equals(getMedicalProblems())
+                && otherPatient.getMedications().equals(getMedications())
+                && otherPatient.getAllergies().equals(getAllergies())
+                && otherPatient.getPreferredDoctor().equals(getPreferredDoctor());
     }
 
     @Override

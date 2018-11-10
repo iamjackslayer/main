@@ -24,7 +24,7 @@ public class DateTest {
 
         //invalid day
         assertFalse(Date.isValidDay(30, 2, 2020));
-        assertFalse(Date.isValidDay(31, 4, 2018));
+        assertFalse(Date.isValidDay(32, 4, 2018));
         assertFalse(Date.isValidDay(679, 12, 2000));
         assertFalse(Date.isValidDay(31, 9, 2000));
         assertFalse(Date.isValidDay(30, 2, 1977));
@@ -81,6 +81,17 @@ public class DateTest {
 
         //invalid year
         assertFalse(Date.isValidDate("12 03 222222"));
+    }
+
+    @Test
+    public void isCurrentWeek() {
+        Date date = new Date(2, 2, 2000);
+        assertFalse(date.isCurrentWeek());
+    }
+
+    @Test
+    public void isValidFebDay() {
+        assertTrue(Date.isValidFebDay(22, 2000));
     }
 
     @Test

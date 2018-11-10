@@ -25,6 +25,8 @@ import seedu.clinicio.model.analytics.Analytics;
 import seedu.clinicio.model.analytics.StatisticType;
 import seedu.clinicio.model.appointment.Appointment;
 import seedu.clinicio.model.consultation.Consultation;
+import seedu.clinicio.model.medicine.Medicine;
+import seedu.clinicio.model.medicine.MedicineQuantity;
 import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.person.Person;
 import seedu.clinicio.model.staff.Staff;
@@ -341,6 +343,43 @@ public class AddCommandTest {
         public void requestAnalyticsDisplay(StatisticType statisticType) {
             throw new AssertionError("This method should not be called.");
         }
+
+        //@@author aaronseahyh
+        @Override
+        public boolean hasMedicine(Medicine medicine) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        //@@author aaronseahyh
+        @Override
+        public void deleteMedicine(Medicine medicine) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        //@@author aaronseahyh
+        @Override
+        public void addMedicine(Medicine medicine) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        //@@author aaronseahyh
+        @Override
+        public void updateMedicineQuantity(Medicine medicine, MedicineQuantity newQuantity) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        //@@author aaronseahyh
+        @Override
+        public ObservableList<Medicine> getFilteredMedicineList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        //@@author aaronseahyh
+        @Override
+        public void updateFilteredMedicineList(Predicate<Medicine> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
     }
 
     /**

@@ -36,17 +36,22 @@ public class TimeTest {
     @Test
     public void isValidTime() {
         //valid time
-        assertTrue(Time.isValidTime("02 03"));
+        assertTrue(Time.isValidTime("21 22"));
 
         //invalid hours
         assertFalse(Time.isValidTime("222 20"));
-        assertFalse(Time.isValidTime("ee 20"));
-        assertFalse(Time.isValidTime("   39"));
+        assertFalse(Time.isValidTime("ee 22"));
+        assertFalse(Time.isValidTime("   21"));
 
         //invalid minutes
-        assertFalse(Time.isValidTime("33 ee"));
+        assertFalse(Time.isValidTime("12 ee"));
         assertFalse(Time.isValidTime("22 222"));
         assertFalse(Time.isValidTime("21    "));
+
+        //both invalid
+        assertFalse(Time.isValidTime("222 222"));
+        assertFalse(Time.isValidTime("ee ee"));
+        assertFalse(Time.isValidTime("     "));
     }
 
     @Test
@@ -74,5 +79,12 @@ public class TimeTest {
         //diff
         assertFalse(time2.equals(time3));
         assertFalse(time2.equals(null));
+    }
+
+    @Test
+    public void checkToString() {
+        Time time = new Time(23, 17);
+        String checkTime = "Time: 23 17";
+        assertTrue(time.toString().equals(checkTime));
     }
 }

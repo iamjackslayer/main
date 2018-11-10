@@ -63,7 +63,7 @@ public class LoginCommand extends Command {
             return new CommandResult(MESSAGE_FAILURE);
         }
 
-        UserSession.createSession(toAuthenticate);
+        UserSession.create(toAuthenticate);
         EventsCenter.getInstance().post(new LoginSuccessEvent(toAuthenticate));
         return new CommandResult(MESSAGE_SUCCESS);
     }

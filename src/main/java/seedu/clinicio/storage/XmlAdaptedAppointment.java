@@ -1,5 +1,7 @@
 package seedu.clinicio.storage;
 
+//@@gingivitiss
+
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -9,7 +11,6 @@ import seedu.clinicio.model.appointment.Appointment;
 import seedu.clinicio.model.appointment.Date;
 import seedu.clinicio.model.appointment.Time;
 import seedu.clinicio.model.patient.Patient;
-
 
 /**
  * JAXB-friendly version of the Appointment.
@@ -22,14 +23,14 @@ public class XmlAdaptedAppointment {
     @XmlElement(required = true)
     private String time;
     @XmlElement(required = true)
-    private String patient;
-    @XmlElement(required = true)
     private int status;
+    @XmlElement(required = true)
+    private XmlAdaptedPatient patient;
 
     @XmlElement
     private int type;
     @XmlElement
-    private String staff;
+    private XmlAdaptedStaff staff;
 
     /**
      * Constructs an XmlAdaptedAppointment. This is the no-arg constructor that is required by JAXB.
@@ -40,11 +41,12 @@ public class XmlAdaptedAppointment {
     /**
      * Constructs an {@code XmlAdaptedAppointment} with the given appointment details.
      */
-    public XmlAdaptedAppointment(String date, String time, String ic, int status, int type, String staff) {
+    public XmlAdaptedAppointment(String date, String time, XmlAdaptedPatient patient,
+                                 int status, int type, XmlAdaptedStaff staff) {
         this.date = date;
         this.time = time;
-        this.patient = ic;
         this.status = status;
+        this.patient = patient;
         this.type = type;
         if (staff != null) {
             this.staff = staff;
@@ -67,34 +69,50 @@ public class XmlAdaptedAppointment {
         int min = source.getAppointmentTime().getMinute();
 
         time = String.valueOf(hour) + " " + String.valueOf(min);
-        patient = source.getPatient().toString();
+
+        patient = new XmlAdaptedPatient(source.getPatient());
+
         status = source.getAppointmentStatus();
         type = source.getAppointmentType();
-        staff = source.getAssignedStaff().toString();
+
+        if (source.getAssignedStaff().isPresent()) {
+            staff = new XmlAdaptedStaff(source.getAssignedStaff().get());
+        }
     }
 
     /**
-     * Converts this jaxb-friendly adapted appointment object into the model's Appointment object. TODO.
+     * Converts {@code Patient} string into it's object parameters.
+     */
+    public void toSimpleString(String patient) {
+
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted appointment object into the model's Appointment object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted appointment
      */
     public Appointment toModelType() throws IllegalValueException {
+
         if (date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName()));
         }
+
         if (!Date.isValidDate(date)) {
             throw new IllegalValueException(String.format(Date.MESSAGE_DATE_CONSTRAINTS));
         }
+
         if (time == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
         }
+
         if (!Time.isValidTime(time)) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Time.class.getSimpleName()));
         }
-        if (patient == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Patient.class.getSimpleName()));
-        }
-        return new Appointment(Date.newDate(date), Time.newTime(time), null, type);
+
+        Patient modelPatient = patient.toModelType();
+
+        return new Appointment(Date.newDate(date), Time.newTime(time), modelPatient, type);
     }
 
     @Override
@@ -110,8 +128,8 @@ public class XmlAdaptedAppointment {
         XmlAdaptedAppointment otherAppt = (XmlAdaptedAppointment) other;
         return Objects.equals(date, otherAppt.date)
                 && Objects.equals(time, otherAppt.time)
-                && Objects.equals(patient, otherAppt.patient)
                 && Objects.equals(status, otherAppt.status)
+                && Objects.equals(patient, otherAppt.patient)
                 && Objects.equals(type, otherAppt.type)
                 && Objects.equals(staff, otherAppt.staff);
     }

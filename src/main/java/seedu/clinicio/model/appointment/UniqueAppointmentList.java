@@ -91,7 +91,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         if (index == -1) {
             throw new AppointmentNotFoundException();
         }
-        target.isCancelled();
+        target.cancelAppointment();
         Appointment cancelledAppt = target;
         internalList.set(index, cancelledAppt);
     }
@@ -120,6 +120,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         requireAllNonNull(appts);
         if (!appointmentsAreUnique(appts)) {
             throw new DuplicateAppointmentException();
+        }
+        if (!appointmentsAreNotOverlapping(appts)) {
+            throw new AppointmentClashException();
         }
         internalList.setAll(appts);
     }
@@ -162,4 +165,17 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         return true;
     }
 
+    /**
+     * Returns true if {@code appts} contains only non-overlapping appointments.
+     */
+    private boolean appointmentsAreNotOverlapping(List<Appointment> appts) {
+        for (int i = 0; i < appts.size() - 1; i++) {
+            for (int j = i + 1; j < appts.size(); j++) {
+                if (appts.get(i).isOverlapAppointment(appts.get(j))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

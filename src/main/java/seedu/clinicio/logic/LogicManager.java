@@ -14,6 +14,7 @@ import seedu.clinicio.logic.parser.ClinicIoParser;
 import seedu.clinicio.logic.parser.exceptions.ParseException;
 
 import seedu.clinicio.model.Model;
+import seedu.clinicio.model.appointment.Appointment;
 import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.person.Person;
 import seedu.clinicio.model.staff.Staff;
@@ -61,6 +62,10 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public ObservableList<Appointment> getFilteredAppointmentList() {
+        return model.getFilteredAppointmentList();
+    }
+
     public ObservableList<Person> getAllPatientsInQueue() {
         return model.getAllPatientsInQueue();
     }

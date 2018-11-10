@@ -5,7 +5,7 @@ import static seedu.clinicio.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Patient's Nric in the ClinicIO.
- * Guarantees: immutable; name is valid as declared in {@link #isValidNric(String)}
+ * Guarantees: immutable; nric is valid as declared in {@link #isValidNric(String)}
  */
 public class Nric {
     public static final String MESSAGE_NRIC_CONSTRAINTS = "NRIC should have 9 alphanumeric characters"

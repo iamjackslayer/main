@@ -60,4 +60,11 @@ public class EnqueueCommand extends Command {
         model.commitClinicIo();
         return new CommandResult(String.format(MESSAGE_ENQUEUE_PATIENT_SUCCESS, patientToEnqueue.getName()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EnqueueCommand // instanceof handles nulls
+                && index.equals(((EnqueueCommand) other).index)); // state check
+    }
 }

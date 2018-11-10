@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.ObservableList;
 import seedu.clinicio.model.appointment.Appointment;
 import seedu.clinicio.model.consultation.Consultation;
 import seedu.clinicio.model.patient.Patient;
@@ -38,7 +37,7 @@ public class ExportPatientsData {
      * Exports all patients' personal information to a csv file.
      * Each row contains the information of a single patient.
      */
-    public static String exportPatients(ObservableList<Patient> patients) {
+    public static String exportPatients(List<Patient> patients) {
         List<String> rows = new ArrayList<>();
 
         String header = getCsvRow(NAME, ADDRESS, PHONE, EMAIL);
@@ -61,7 +60,7 @@ public class ExportPatientsData {
      * Exports all patients' appointment records to a csv file.
      * Each row contains the information of a single appointment.
      */
-    public static String exportAppointments(ObservableList<Patient> patients) {
+    public static String exportAppointments(List<Patient> patients) {
         List<String> rows = new ArrayList<>();
 
         String header = getCsvRow(NAME, ADDRESS, PHONE, EMAIL, "Date", "Time", "Status", "Type");
@@ -90,7 +89,7 @@ public class ExportPatientsData {
      * Exports all patients' consultation records to a csv file.
      * Each row contains the information of a single consultation.
      */
-    public static String exportConsultations(ObservableList<Patient> patients) {
+    public static String exportConsultations(List<Patient> patients) {
         List<String> rows = new ArrayList<>();
 
         String header = getCsvRow(NAME, ADDRESS, PHONE, EMAIL, "Date", "Arrival Time", "Consultation Time",

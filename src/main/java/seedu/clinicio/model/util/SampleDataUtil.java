@@ -12,6 +12,15 @@ import java.util.stream.Collectors;
 import seedu.clinicio.commons.util.HashUtil;
 import seedu.clinicio.model.ClinicIo;
 import seedu.clinicio.model.ReadOnlyClinicIo;
+import seedu.clinicio.model.medicine.Medicine;
+import seedu.clinicio.model.medicine.MedicineDosage;
+import seedu.clinicio.model.medicine.MedicineName;
+import seedu.clinicio.model.medicine.MedicinePrice;
+import seedu.clinicio.model.medicine.MedicineQuantity;
+import seedu.clinicio.model.medicine.MedicineType;
+import seedu.clinicio.model.patient.Allergy;
+import seedu.clinicio.model.patient.MedicalProblem;
+import seedu.clinicio.model.patient.Medication;
 import seedu.clinicio.model.person.Address;
 import seedu.clinicio.model.person.Email;
 import seedu.clinicio.model.person.Name;
@@ -63,14 +72,39 @@ public class SampleDataUtil {
                         new Password(HashUtil.hashToString("reception2"), true))));
     }
 
+    //@@author aaronseahyh
+    public static Medicine[] getSampleMedicines() {
+        return new Medicine[]{
+            new Medicine(new MedicineName("Paracetamol"), new MedicineType("Tablet"),
+                    new MedicineDosage("2"), new MedicineDosage("8"),
+                    new MedicinePrice("0.05"), new MedicineQuantity("5000")),
+            new Medicine(new MedicineName("Chlorpheniramine"), new MedicineType("Liquid"),
+                    new MedicineDosage("4"), new MedicineDosage("32"),
+                    new MedicinePrice("18.90"), new MedicineQuantity("500")),
+            new Medicine(new MedicineName("Oracort"), new MedicineType("Topical"),
+                    new MedicineDosage("5"), new MedicineDosage("30"),
+                    new MedicinePrice("8.90"), new MedicineQuantity("100")),
+            new Medicine(new MedicineName("Ventolin"), new MedicineType("Inhaler"),
+                    new MedicineDosage("2"), new MedicineDosage("10"),
+                    new MedicinePrice("13.55"), new MedicineQuantity("200"))
+        };
+    }
+
     public static ReadOnlyClinicIo getSampleClinicIo() {
         ClinicIo sampleClinicIo = new ClinicIo();
+
         for (Person samplePerson : getSamplePersons()) {
             sampleClinicIo.addPerson(samplePerson);
         }
+
         //@@author jjlee050
         for (Staff sampleStaff : getSampleStaffs()) {
             sampleClinicIo.addStaff(sampleStaff);
+        }
+
+        //@@author aaronseahyh
+        for (Medicine sampleMedicine : getSampleMedicines()) {
+            sampleClinicIo.addMedicine(sampleMedicine);
         }
 
         return sampleClinicIo;
@@ -85,4 +119,30 @@ public class SampleDataUtil {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Returns a medical problem set containing the list of strings given.
+     */
+    public static Set<MedicalProblem> getMedicalProblemSet(String... strings) {
+        return Arrays.stream(strings)
+                .map(MedicalProblem::new)
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns a medication set containing the list of strings given.
+     */
+    public static Set<Medication> getMedicationSet(String... strings) {
+        return Arrays.stream(strings)
+                .map(Medication::new)
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Returns a allergy set containing the list of strings given.
+     */
+    public static Set<Allergy> getAllergySet(String... strings) {
+        return Arrays.stream(strings)
+                .map(Allergy::new)
+                .collect(Collectors.toSet());
+    }
 }

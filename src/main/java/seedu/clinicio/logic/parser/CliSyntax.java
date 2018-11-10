@@ -25,4 +25,13 @@ public class CliSyntax {
     /* Login Prefix definitions */
     public static final Prefix PREFIX_ROLE = new Prefix("r/");
     public static final Prefix PREFIX_PASSWORD = new Prefix("pass/");
+
+    //@@author aaronseahyh
+    public static final Prefix PREFIX_MEDICINE_NAME = new Prefix("mn/");
+    public static final Prefix PREFIX_MEDICINE_TYPE = new Prefix("mt/");
+    public static final Prefix PREFIX_MEDICINE_EFFECTIVE_DOSAGE = new Prefix("ed/");
+    public static final Prefix PREFIX_MEDICINE_LETHAL_DOSAGE = new Prefix("ld/");
+    public static final Prefix PREFIX_MEDICINE_PRICE = new Prefix("mp/");
+    public static final Prefix PREFIX_MEDICINE_QUANTITY = new Prefix ("mq/");
+
 }

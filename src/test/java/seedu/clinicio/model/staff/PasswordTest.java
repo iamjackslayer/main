@@ -1,4 +1,4 @@
-package seedu.clinicio.model.password;
+package seedu.clinicio.model.staff;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.clinicio.commons.util.HashUtil;
-import seedu.clinicio.model.staff.Password;
+
 import seedu.clinicio.testutil.Assert;
 
 //@@author jjlee050

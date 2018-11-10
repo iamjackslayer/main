@@ -12,12 +12,12 @@ import seedu.clinicio.commons.exceptions.IllegalValueException;
 import seedu.clinicio.model.person.Name;
 import seedu.clinicio.model.staff.Password;
 
+import seedu.clinicio.model.staff.Role;
 import seedu.clinicio.testutil.Assert;
 
 //@@author jjlee050
-public class XmlAdapterStaffTest {
+public class XmlAdaptedStaffTest {
 
-    private static final String INVALID_ROLE = "DOCTOR1";
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PASSWORD = "";
 
@@ -32,6 +32,13 @@ public class XmlAdapterStaffTest {
     }
 
     @Test
+    public void toModelType_nullRole_throwsIllegalValueException() {
+        XmlAdaptedStaff staff = new XmlAdaptedStaff(null, VALID_NAME, VALID_PASSWORD);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Role.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, staff::toModelType);
+    }
+
+    @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
         XmlAdaptedStaff staff =
                 new XmlAdaptedStaff(VALID_ROLE, INVALID_NAME, VALID_PASSWORD);
@@ -41,24 +48,24 @@ public class XmlAdapterStaffTest {
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        XmlAdaptedStaff doctor = new XmlAdaptedStaff(VALID_ROLE, null, VALID_PASSWORD);
+        XmlAdaptedStaff staff = new XmlAdaptedStaff(VALID_ROLE, null, VALID_PASSWORD);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, doctor::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, staff::toModelType);
     }
 
     @Test
     public void toModelType_invalidPassword_throwsIllegalValueException() {
-        XmlAdaptedStaff doctor =
+        XmlAdaptedStaff staff =
                 new XmlAdaptedStaff(VALID_ROLE, VALID_NAME, INVALID_PASSWORD);
         String expectedMessage = Password.MESSAGE_PASSWORD_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, doctor::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, staff::toModelType);
     }
 
     @Test
     public void toModelType_nullPassword_throwsIllegalValueException() {
-        XmlAdaptedStaff doctor = new XmlAdaptedStaff(VALID_ROLE, VALID_NAME, null);
+        XmlAdaptedStaff staff = new XmlAdaptedStaff(VALID_ROLE, VALID_NAME, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Password.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, doctor::toModelType);
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, staff::toModelType);
     }
 
 }

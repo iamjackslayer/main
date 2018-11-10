@@ -31,7 +31,7 @@ public class Staff extends Person {
         super(name, new Phone("999"), new Email("alice@live.com"), new Address("1"), new HashSet<>());
         requireAllNonNull(role, name);
         this.role = role;
-        this.password = new Password("", false);
+        this.password = new Password("123456", false);
     }
 
     /**

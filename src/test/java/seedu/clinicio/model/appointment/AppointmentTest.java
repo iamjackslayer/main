@@ -1,12 +1,15 @@
 package seedu.clinicio.model.appointment;
 
+//@@author gingivitiss
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.clinicio.testutil.TypicalPersons.ADAM;
-import static seedu.clinicio.testutil.TypicalPersons.ALICE_AS_PATIENT;
+import static seedu.clinicio.testutil.TypicalPersons.ALEX;
 import static seedu.clinicio.testutil.TypicalPersons.BEN;
-import static seedu.clinicio.testutil.TypicalPersons.BENSON_AS_PATIENT;
+import static seedu.clinicio.testutil.TypicalPersons.BRYAN;
 
 import org.junit.Test;
 
@@ -24,8 +27,8 @@ public class AppointmentTest {
         Date validDate = new Date(2, 2, 2002);
         Time validTime = new Time(12, 20);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 1);
-        Appointment appt2 = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 1);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 1);
+        Appointment appt2 = new Appointment(validDate, validTime, ALEX, 1);
 
         appt.cancelAppointment();
 
@@ -42,10 +45,10 @@ public class AppointmentTest {
         Time validTime = new Time(12, 20);
         Time otherTime = new Time(23, 10);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 1);
-        Appointment appt2 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 1);
-        Appointment appt3 = new Appointment(otherDate, validTime, ALICE_AS_PATIENT, 1);
-        Appointment appt4 = new Appointment(otherDate, otherTime, ALICE_AS_PATIENT, 1);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 1);
+        Appointment appt2 = new Appointment(validDate, validTime, BRYAN, 1);
+        Appointment appt3 = new Appointment(otherDate, validTime, ALEX, 1);
+        Appointment appt4 = new Appointment(otherDate, otherTime, ALEX, 1);
 
         //same obj
         assertTrue(appt.isSameSlot(appt));
@@ -69,9 +72,9 @@ public class AppointmentTest {
 
         Time validTime = new Time(12, 0);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
-        Appointment appt2 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
-        Appointment appt3 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
+        Appointment appt2 = new Appointment(validDate, validTime, BRYAN, 0);
+        Appointment appt3 = new Appointment(validDate, validTime, BRYAN, 0);
 
         //same obj
         assertTrue(appt.isSamePatient(appt));
@@ -88,9 +91,9 @@ public class AppointmentTest {
         Date validDate = new Date(2, 2, 2222);
         Time validTime = new Time(12, 0);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
-        Appointment appt2 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 1);
-        Appointment appt3 = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
+        Appointment appt2 = new Appointment(validDate, validTime, BRYAN, 1);
+        Appointment appt3 = new Appointment(validDate, validTime, ALEX, 0);
 
         //same obj
         assertTrue(appt.isSameDoctor(appt));
@@ -99,7 +102,7 @@ public class AppointmentTest {
         assertTrue(appt.isSameDoctor(appt2));
 
         //diff staff
-        appt3.setAssignedStaff(ADAM);
+        appt3.setAssignedStaff(BEN);
         assertFalse(appt2.isSameDoctor(appt3));
         assertFalse(appt.isSameDoctor(appt3));
     }
@@ -112,12 +115,12 @@ public class AppointmentTest {
         Time validTime = new Time(12, 0);
         Time otherTime = new Time(13, 0);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
-        Appointment appt2 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
-        Appointment appt3 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
-        Appointment appt4 = new Appointment(validDate, otherTime, ALICE_AS_PATIENT, 0);
-        Appointment appt5 = new Appointment(otherDate, otherTime, ALICE_AS_PATIENT, 0);
-        Appointment appt6 = new Appointment(otherDate, otherTime, ALICE_AS_PATIENT, 0);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
+        Appointment appt2 = new Appointment(validDate, validTime, BRYAN, 0);
+        Appointment appt3 = new Appointment(validDate, validTime, BRYAN, 0);
+        Appointment appt4 = new Appointment(validDate, otherTime, ALEX, 0);
+        Appointment appt5 = new Appointment(otherDate, otherTime, ALEX, 0);
+        Appointment appt6 = new Appointment(otherDate, otherTime, ALEX, 0);
 
         //same obj
         assertTrue(appt.isSameAppointment(appt));
@@ -135,11 +138,11 @@ public class AppointmentTest {
         assertFalse(appt5.isSameAppointment(appt4));
 
         //diff staff - 1 null
-        appt6.setAssignedStaff(ADAM);
+        appt6.setAssignedStaff(BEN);
         assertFalse(appt6.isSameAppointment(appt5));
 
         //diff staff
-        appt5.setAssignedStaff(BEN);
+        appt5.setAssignedStaff(ADAM);
         assertFalse(appt5.isSameAppointment(appt6));
 
         //diff status
@@ -157,12 +160,12 @@ public class AppointmentTest {
         Time otherTime2 = new Time(12, 30);
         Time otherTime3 = new Time(13, 30);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
-        Appointment appt2 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
-        Appointment appt3 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
-        Appointment appt4 = new Appointment(validDate, otherTime, ALICE_AS_PATIENT, 0);
-        Appointment appt5 = new Appointment(validDate, otherTime2, ALICE_AS_PATIENT, 0);
-        Appointment appt6 = new Appointment(validDate, otherTime3, ALICE_AS_PATIENT, 0);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
+        Appointment appt2 = new Appointment(validDate, validTime, BRYAN, 0);
+        Appointment appt3 = new Appointment(validDate, validTime, BRYAN, 0);
+        Appointment appt4 = new Appointment(validDate, otherTime, ALEX, 0);
+        Appointment appt5 = new Appointment(validDate, otherTime2, ALEX, 0);
+        Appointment appt6 = new Appointment(validDate, otherTime3, ALEX, 0);
 
         //same obj
         assertTrue(appt.isOverlapAppointment(appt));
@@ -186,7 +189,7 @@ public class AppointmentTest {
         Date validDate = new Date(2, 2, 2222);
         Time validTime = new Time(12, 0);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
 
         appt.cancelAppointment();
         assertTrue(appt.isCancelled());
@@ -196,7 +199,7 @@ public class AppointmentTest {
     public void statusToString() {
         Date validDate = new Date(2, 2, 2222);
         Time validTime = new Time(12, 0);
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
 
         assertEquals(appt.statusToString(), "Status: APPROVED");
 
@@ -211,8 +214,8 @@ public class AppointmentTest {
         Date validDate = new Date(2, 2, 2222);
         Time validTime = new Time(12, 0);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
-        Appointment appt2 = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 1);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
+        Appointment appt2 = new Appointment(validDate, validTime, ALEX, 1);
 
         assertEquals(appt.typeToString(), "Type: NEW");
         assertEquals(appt2.typeToString(), "Type: FOLLOW-UP");
@@ -226,12 +229,12 @@ public class AppointmentTest {
         Time validTime = new Time(12, 0);
         Time otherTime = new Time(13, 0);
 
-        Appointment appt = new Appointment(validDate, validTime, ALICE_AS_PATIENT, 0);
-        Appointment appt2 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
-        Appointment appt3 = new Appointment(validDate, validTime, BENSON_AS_PATIENT, 0);
-        Appointment appt4 = new Appointment(validDate, otherTime, ALICE_AS_PATIENT, 0);
-        Appointment appt5 = new Appointment(otherDate, otherTime, ALICE_AS_PATIENT, 0);
-        Appointment appt6 = new Appointment(otherDate, otherTime, ALICE_AS_PATIENT, 0);
+        Appointment appt = new Appointment(validDate, validTime, ALEX, 0);
+        Appointment appt2 = new Appointment(validDate, validTime, BRYAN, 0);
+        Appointment appt3 = new Appointment(validDate, validTime, BRYAN, 0);
+        Appointment appt4 = new Appointment(validDate, otherTime, ALEX, 0);
+        Appointment appt5 = new Appointment(otherDate, otherTime, ALEX, 0);
+        Appointment appt6 = new Appointment(otherDate, otherTime, ALEX, 0);
 
         //same obj
         assertTrue(appt.equals(appt));
@@ -249,15 +252,18 @@ public class AppointmentTest {
         assertFalse(appt.equals(appt4));
 
         //diff staff - 1 null
-        appt5.setAssignedStaff(ADAM);
+        appt5.setAssignedStaff(BEN);
         assertFalse(appt6.equals(appt5));
 
         //diff staff
-        appt6.setAssignedStaff(BEN);
+        appt6.setAssignedStaff(ADAM);
         assertFalse(appt6.equals(appt5));
 
         //diff status
         appt2.cancelAppointment();
         assertFalse(appt2.equals(appt3));
+
+        //instance of
+        assertFalse(appt2.equals(validDate));
     }
 }

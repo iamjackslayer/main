@@ -64,4 +64,11 @@ public class DequeueCommand extends Command {
         model.commitClinicIo();
         return new CommandResult(String.format(MESSAGE_DEQUEUE_PATIENT_SUCCESS, patientToDequeue.getName()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DequeueCommand // instanceof handles nulls
+                && index.equals(((DequeueCommand) other).index)); // state check
+    }
 }

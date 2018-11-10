@@ -12,8 +12,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.clinicio.commons.core.LogsCenter;
+import seedu.clinicio.commons.core.UserSession;
 import seedu.clinicio.commons.events.model.ClinicIoChangedEvent;
 import seedu.clinicio.commons.events.ui.LoginSuccessEvent;
+import seedu.clinicio.commons.events.ui.LogoutClinicIoEvent;
 import seedu.clinicio.model.staff.Staff;
 
 /**
@@ -91,5 +93,13 @@ public class StatusBarFooter extends UiPart<Region> {
                 "You are now logged in as " + currentUser));
         setUserSessionStatus(String.format(USER_SESSION_STATUS_UPDATED,
                 currentUser.getName(), currentUser.getRole()));
+    }
+
+    @Subscribe
+    public void handleLogoutClinicIoEvent(LogoutClinicIoEvent logoutClinicIoEvent) {
+        UserSession.destroy();
+        logger.info(LogsCenter.getEventHandlingLogMessage(logoutClinicIoEvent,
+                "You have logged out successfully"));
+        setUserSessionStatus(USER_SESSION_STATUS_INITIAL);
     }
 }

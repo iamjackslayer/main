@@ -1,7 +1,7 @@
 package seedu.clinicio.testutil;
 
 import static seedu.clinicio.testutil.TypicalPersons.ADAM;
-import static seedu.clinicio.testutil.TypicalPersons.BENSON_AS_PATIENT;
+import static seedu.clinicio.testutil.TypicalPersons.BRYAN;
 
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ public class AppointmentBuilder {
 
     public static final Date DEFAULT_DATE = new Date(1, 1, 2018);
     public static final Time DEFAULT_TIME = new Time(16, 30);
-    public static final Patient DEFAULT_PATIENT = BENSON_AS_PATIENT;
+    public static final Patient DEFAULT_PATIENT = BRYAN;
     public static final int DEFAULT_TYPE = 0;
     public static final int DEFAULT_STATUS = 1;
     public static final Optional<Staff> DEFAULT_STAFF = Optional.of(ADAM);

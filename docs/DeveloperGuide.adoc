@@ -1,6 +1,3 @@
-﻿= ClinicIO - Developer Guide
-Thank you for your interest in contributing to ClinicIO!
-
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -15,6 +12,10 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-W14-1/main
+
+= ClinicIO - Developer Guide
+
+Thank you for your interest in contributing to ClinicIO! +
 
 By: `W14-1`      Since: `Sept 2018`      Licence: `MIT`
 
@@ -33,7 +34,6 @@ If you are new to development, you can try working step-by-step tutorial from Or
 
 If you are new to contributing to ClinicIO, head over to <<#Setting Up, Setting Up>> to start
 set up ClinicIO project.
-
 
 == Setting up
 
@@ -441,13 +441,14 @@ The implemented operations include: +
 
 * `addappt` Command - Adds appointments to the appointment schedule.
 * `cancelappt` Command - Cancels appointments found within the appointment schedule.
-* `listapptday` Command - Lists the appointment schedule of the date specified.
+* `listappt` Command - Lists the appointment schedule of the date specified.
 
-Each `Appointment` object consists of a `Date`, `Time`, and `Patient`.
+Each `Appointment` object consists of a `Date`, `Time`, `Type` and `Patient`.
 
 ==== `addappt` Command
 
-The `addappt` command behaves similarly to the `add` command used for `Patient` and `Doctor`. The command takes in the parameters required to construct `Date`, `Time` and takes in a `Patient` id. +
+The `addappt` command behaves similarly to the `add` command used for `Patient` and `Doctor`. The command takes in the parameters required to construct `Date`, `Time` and takes in `Patient` details. Patient parameters will be simplified upon the addition of `Patient IC` in v2.0. +
+
 The image below illustrates this process.
 
 .Appointment construction process.
@@ -455,13 +456,21 @@ image::ApptConstructorSequenceDiagram.png[width="0"]
 
 Once the Appointment object is constructed, `AddressBook#addAppointment(Appointment appt)` is called to add the Appointment object into the `UniqueAppointmentList`.
 
-Before it can successfully add the `Appointment` object into the list, a check for any appointment clash is carried out via `UniqueAppointmentList#hasClash(Appointment appt)`. Additionally, duplicates are checked for via `UniqueAppointmentList#hasAppointment(Appointment appt)`. If no exception is thrown, the Appointment is then successfully added into the `UniqueAppointmentList`.
+Before it can successfully add the `Appointment` object into the list, a check for any appointment clash is carried out via `UniqueAppointmentList#hasClash(Appointment appt)` and `UniqueAppointmentList#hasOverlap(Appointment appt)`.
 
-`ModelManager#indicateAddressBookChanged()` is then called to shift the `VersionedAddressBook#pointer` to the it's latest state. i.e. The addition of a new `Appointment` object. This means that this command can be undone or redone.
+Additionally, duplicates are checked for via `UniqueAppointmentList#hasAppointment(Appointment appt)`. If no exception is thrown, the Appointment is then successfully added into the `UniqueAppointmentList`.
 
-==== `listapptday` Command
+`ModelManager#indicateAddressBookChanged()` is then called to shift the `VersionedAddressBook#pointer` to it's latest state, i.e. The addition of a new `Appointment` object.
 
-The `listapptday` command searches for appointments in the `UniqueAppointmentList` that land on the date that was entered by the user. For example, `listapptday 03032018` is entered by the user. A `Date` object with data fields `Date#day`, `Date#Time`, `Date#Year` filled out as 3, 3 and 2018 respectively, is constructed.
+This means that this command can be undone or redone.
+
+==== `listappt` Command
+
+The `listappt` command searches for appointments in the `UniqueAppointmentList` by creating a `FilteredAppointmentList` containing appointments that land on the date that was entered by the user.
+
+A `Date` object is instantiated from the user-entered date. This is done via `ParseUtil#parseDate()`. The `date` object is then used to make a `AppointmentContainsDatePredicate` object. The list of filtered appointments by date are generated once the method `ModelManager#updateFilteredAppointmentList`. The new `FilteredAppointmentList` is finally displayed on screen with appointments chronologically ordered with their respective indices.
+
+For example, `listappt 03 03 2018` is entered by the user. A `Date` object with data fields `Date#day`, `Date#Time`, `Date#Year` filled out as 3, 3 and 2018 respectively, is constructed. [too much create!!!]
 
 ==== `cancelappt` Command
 

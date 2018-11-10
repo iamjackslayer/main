@@ -2,9 +2,11 @@ package seedu.clinicio.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.clinicio.testutil.EventsUtil.postNow;
+import static seedu.clinicio.testutil.TypicalPersons.ADAM;
 import static seedu.clinicio.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.clinicio.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.clinicio.ui.StatusBarFooter.USER_SESSION_STATUS_INITIAL;
+import static seedu.clinicio.ui.StatusBarFooter.USER_SESSION_STATUS_UPDATED;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,6 +22,8 @@ import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.clinicio.commons.events.model.ClinicIoChangedEvent;
+import seedu.clinicio.commons.events.ui.LoginSuccessEvent;
+import seedu.clinicio.commons.events.ui.LogoutClinicIoEvent;
 import seedu.clinicio.model.ClinicIo;
 
 public class StatusBarFooterTest extends GuiUnitTest {
@@ -28,6 +32,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final Path RELATIVE_PATH = Paths.get(".");
 
     private static final ClinicIoChangedEvent EVENT_STUB = new ClinicIoChangedEvent(new ClinicIo());
+    private static final LoginSuccessEvent LOGIN_SUCCESS_EVENT = new LoginSuccessEvent(ADAM);
+    private static final LogoutClinicIoEvent LOGOUT_CLINIC_IO_EVENT = new LogoutClinicIoEvent();
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -60,8 +66,17 @@ public class StatusBarFooterTest extends GuiUnitTest {
         assertStatusBarContent(USER_SESSION_STATUS_INITIAL, SYNC_STATUS_INITIAL);
 
         // after ClinicIO is updated
-        // TODO: User session updated
         postNow(EVENT_STUB);
+        assertStatusBarContent(USER_SESSION_STATUS_INITIAL,
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+
+        // after login successful
+        postNow(LOGIN_SUCCESS_EVENT);
+        assertStatusBarContent(String.format(USER_SESSION_STATUS_UPDATED, ADAM.getName().fullName, ADAM.getRole()),
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+
+        // after logout
+        postNow(LOGOUT_CLINIC_IO_EVENT);
         assertStatusBarContent(USER_SESSION_STATUS_INITIAL,
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }

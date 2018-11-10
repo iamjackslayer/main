@@ -602,10 +602,10 @@ Format: `listappt d/DATE` +
 
 Examples:
 
-* `listappt d/02032017` +
+* `listappt 02 03 2017` +
 Lists all appointments on 2 March 2017. +
 
-* `listappt d/01012000` +
+* `listappt 01 01 2000` +
 Lists all appointments on 1 January 2000.
 
 ==== Cancelling Appointments: `cancelappt` [Coming in v1.4]
@@ -640,7 +640,6 @@ This section is designed to help you answer any issues that are frequently asked
 
 *Q*: How to save data in ClinicIO? +
 *A*: There is no need for you to save manually. ClinicIO will automatically save data to the hard disk after any command that changes the data. +
-
 
 == Command Summary
 

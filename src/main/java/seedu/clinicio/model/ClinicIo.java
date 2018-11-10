@@ -11,6 +11,9 @@ import seedu.clinicio.model.appointment.Appointment;
 import seedu.clinicio.model.appointment.UniqueAppointmentList;
 import seedu.clinicio.model.consultation.Consultation;
 import seedu.clinicio.model.consultation.UniqueConsultationList;
+import seedu.clinicio.model.medicine.Medicine;
+import seedu.clinicio.model.medicine.MedicineQuantity;
+import seedu.clinicio.model.medicine.UniqueMedicineList;
 import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.patient.UniquePatientList;
 import seedu.clinicio.model.person.Person;
@@ -32,6 +35,8 @@ public class ClinicIo implements ReadOnlyClinicIo {
     //@@author gingivitiss
     private final UniqueAppointmentList appointments;
     private final UniqueConsultationList consultations;
+    //@@author aaronseahyh
+    private final UniqueMedicineList medicines;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +53,8 @@ public class ClinicIo implements ReadOnlyClinicIo {
         //@@author gingivitiss
         appointments = new UniqueAppointmentList();
         consultations = new UniqueConsultationList();
+        //@@author aaronseahyh
+        medicines = new UniqueMedicineList();
     }
 
     public ClinicIo() {}
@@ -95,6 +102,15 @@ public class ClinicIo implements ReadOnlyClinicIo {
         this.appointments.setAppointments(appointments);
     }
 
+    //@@author aaronseahyh
+    /**
+     * Replaces the contents of the medicine list with {@code medicines}.
+     * {@code medicines} must not contain duplicate medicines.
+     */
+    public void setMedicines(List<Medicine> medicines) {
+        this.medicines.setMedicines(medicines);
+    }
+
     /**
      * Resets the existing data of this {@code ClinicIo} with {@code newData}.
      */
@@ -103,6 +119,8 @@ public class ClinicIo implements ReadOnlyClinicIo {
         setPersons(newData.getPersonList());
         setPatients(newData.getPatientList());
         setStaffs(newData.getStaffList());
+        setAppointments(newData.getAppointmentList());
+        setMedicines(newData.getMedicineList());
     }
 
     //========== Person-level operations =====================================================================
@@ -158,12 +176,21 @@ public class ClinicIo implements ReadOnlyClinicIo {
         return consultations.contains(consultation);
     }
 
+    //@@author aaronseahyh
+    /**
+     * Returns true if a medicine with the same identity as {@code medicine} exists in the ClinicIO.
+     */
+    public boolean hasMedicine(Medicine medicine) {
+        requireNonNull(medicine);
+        return medicines.contains(medicine);
+    }
+
     /**
      * Adds a person to the ClinicIO.
      * The person must not already exist in the ClinicIO.
      */
     public void addPerson(Person p) {
-        persons.add(Patient.buildFromPerson(p));
+        persons.add(p);
     }
 
     /**
@@ -198,6 +225,15 @@ public class ClinicIo implements ReadOnlyClinicIo {
      */
     public void add(Consultation consultation) {
         consultations.add(consultation);
+    }
+
+    //@@author aaronseahyh
+    /**
+     * Adds a medicine to the ClinicIO.
+     * The medicine must not already exist in the ClinicIO.
+     */
+    public void addMedicine(Medicine newMedicine) {
+        medicines.add(newMedicine);
     }
 
     /**
@@ -248,6 +284,16 @@ public class ClinicIo implements ReadOnlyClinicIo {
         consultations.setConsultation(target, editedConsultation);
     }
 
+    //@@author aaronseahyh
+    /**
+     * Updates the given medicine {@code target} in the list with {@code newQuantity}.
+     * {@code target} must exist in the ClinicIO.
+     */
+    public void updateMedicineQuantity(Medicine medicine, MedicineQuantity newQuantity) {
+        requireNonNull(newQuantity);
+        medicines.updateMedicineQuantity(medicine, newQuantity);
+    }
+
     /**
      * Removes {@code key} from this {@code ClinicIo}.
      * {@code key} must exist in the ClinicIO.
@@ -258,7 +304,7 @@ public class ClinicIo implements ReadOnlyClinicIo {
 
     //@@author gingivitiss
     /**
-     * Removes {@code key} from this {@code ClinicIo}. Not to be used to cancel appointments.
+     * Removes {@code key} from this {@code ClinicIo}. Not to be confused with cancelling appointments.
      * {@code key} must exist in the ClinicIO.
      */
     public void removeAppointment(Appointment key) {
@@ -283,6 +329,16 @@ public class ClinicIo implements ReadOnlyClinicIo {
     public void removeConsultation(Consultation key) {
         consultations.remove(key);
     }
+
+    //@@author aaronseahyh
+    /**
+     * Removes {@code medicine} from this {@code ClinicIo}.
+     * {@code medicine} must exist in the ClinicIO.
+     */
+    public void removeMedicine(Medicine medicine) {
+        medicines.remove(medicine);
+    }
+
     //========== Util methods ================================================================================
 
     @Override
@@ -291,7 +347,8 @@ public class ClinicIo implements ReadOnlyClinicIo {
         return persons.asUnmodifiableObservableList().size() + " persons & "
                 + patients.asUnmodifiableObservableList().size() + " patients & "
                 + staffs.asUnmodifiableObservableList().size() + " staffs & "
-                + appointments.asUnmodifiableObservableList().size() + " appointments";
+                + appointments.asUnmodifiableObservableList().size() + " appointments & "
+                + medicines.asUnmodifiableObservableList().size() + " medicines";
         // TODO: refine later
     }
 
@@ -321,6 +378,12 @@ public class ClinicIo implements ReadOnlyClinicIo {
         return consultations.asUnmodifiableObservableList();
     }
 
+    //@@author aaronseahyh
+    @Override
+    public ObservableList<Medicine> getMedicineList() {
+        return medicines.asUnmodifiableObservableList();
+    }
+
     @Override
     public boolean equals(Object other) {
         //@@author jjlee050
@@ -329,13 +392,14 @@ public class ClinicIo implements ReadOnlyClinicIo {
                 && persons.equals(((ClinicIo) other).persons)
                 && patients.equals(((ClinicIo) other).patients)
                 && staffs.equals(((ClinicIo) other).staffs)
-                && appointments.equals(((ClinicIo) other).appointments));
+                && appointments.equals(((ClinicIo) other).appointments)
+                && medicines.equals(((ClinicIo) other).medicines));
     }
 
     @Override
     public int hashCode() {
         //@@author jjlee050
         return Objects.hash(persons.hashCode(), patients.hashCode(),
-                staffs.hashCode(), appointments.hashCode());
+                staffs.hashCode(), appointments.hashCode(), medicines.hashCode());
     }
 }
