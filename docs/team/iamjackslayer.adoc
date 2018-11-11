@@ -1,3 +1,4 @@
+//@@author iamjackslayer
 = Jack Wong - Project Portfolio
 :site-section: AboutUs
 :imagesDir: ../images
@@ -29,35 +30,35 @@ Lastly, I am the main tester of ClinicIO. I ensure all the components are integr
 |===
 |_This section outlines the major and minor enhancements I made to ClinicIO. In addition, other relevant contributions made to the project and my team as a whole are also included._
 |===
-==== 2.1 Major enhancement 1 - added the ability to assign a patient into the queue:
+==== Major enhancement 1 - added the ability to assign a patient into the queue:
 ** *What it does:* It allows the user to assign a patient into the queue based on the index of the patient in the patient display list.
 ** *Justification:* This feature improves the product significantly because a user - typically a receptionist - needs to routinely place patients into the queue.
 ** *Highlight:* This enhancement required an in-depth analysis of design alternatives. The implementation too was challenging as it required a new data structure to save the queue into the hard disk. Besides, it must always reflect the latest status of the queue.
 ** *Code snippet for enqueuing a patient:* +
 `model.enqueue((Patient) patientToEnqueue);`
 
-==== 2.2 Major enhancement 2 - added the ability to remove a patient from the queue:
+==== Major enhancement 2 - added the ability to remove a patient from the queue:
 ** *What it does:* It allows the user - typically a receptionist - to remove a patient from the queue based on the index of the patient in the patient display list.
 ** *Justification:* This feature improves the product significantly because the user can carry out his/her daily routine, in particular removing a patient from the queue, more efficiently without affecting existing patients in the queue.
 ** *Highlight:* This enhancement is tied to the existing list of patients registered in the ClinicIO database. Any patient removed from the database will be automatically removed from the queue. The implementation is challenging as it must always be responsive to any events triggered. For example, when a patient is removed, the list of patients in the queue will be immediately updated and displayed.
 ** *Code snippet for dequeuing a patient:* +
 `model.dequeue((Patient) patientToDequeue);`
 
-==== 2.3 Major enhancement 3 - designed the preference-based queuing algorithm:
+==== Major enhancement 3 - designed the preference-based queuing algorithm:
 ** *What it does:* It determines which patient in the queue to go for consultation based on his/her preference for any doctor.
 ** *Justification:* This feature serves the need of many patients who opt for a specific doctor for consultation. It ensures fairness by prioritising patients who arrive earlier.
 ** *Activity diagram for selecting a patient for consultation:* +
 
 image::popqueue.png[]
 
-==== 2.4 Major enhancement 4 - added the ability to show all patients currently in the queue:
+==== Major enhancement 4 - added the ability to show all patients currently in the queue:
 ** *What it does:* It allows the user - typically a receptionist - to display all patients currently in the queue.
 ** *Justification:* This feature is useful because patients sometimes would enquire the time it takes for their turn to come. The receptionist can use this simple feature to display all patients in the queue and relay necessary information (how many patients are in front of the asking patient) to the patients.
 ** *Code snippet for showing the queue:* +
 `model.updateFilteredPersonList(model.PREDICATE_SHOW_ALL_PATIENTS_IN_QUEUE);`
 
 
-==== 2.5 Major enhancement 5 - designed the Patient model:
+==== Major enhancement 5 - designed the Patient model:
 ** *What it does:* It represents the patient in digital format.
 ** *Justification:* This feature is crucial because it allows the receptionist to store all relevant information associated with a patient into our database. This allows the receptionist to easily query a patient given some information about the patient.
 ** *Highlight:* This patient model is designed to scale, that is, when the clinic requires to add more information or attributes of a patient, the feature can be easily implemented without affecting the existing database.
@@ -66,7 +67,7 @@ image::popqueue.png[]
 image::patientmodel.png[]
 
 
-** *Codes contributed*: +
+==== Codes contributed:
 This subsection provides the link to the relevant source codes I am responsible for writing.
 *** Url link to *all codes* I have written (RepoSense dashboard):
 https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=iamjackslayer&sort=displayName&since=2018-09-30&until=2018-11-11&timeframe=day&reverse=false&repoSort=true
@@ -77,7 +78,7 @@ https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=iamjac
 **** Command to remove a patient from the queue: https://github.com/CS2103-AY1819S1-W14-1/main/blob/master/src/main/java/seedu/clinicio/logic/commands/DequeueCommand.java
 **** Command to show all patients in the queue: https://github.com/CS2103-AY1819S1-W14-1/main/blob/master/src/main/java/seedu/clinicio/logic/commands/ShowPatientInQueueCommand.java
 
-==== 2.6 Other contributions: +
+==== Other contributions: +
 This subsection lists some aspects of the entire project I am responsible for contributing. These contributions reflect my role as an assistant team lead for the project and also my technical responsibility as the main tester for the software. Furthermore, this subsection lists some of my contributions beyond our team.
 
 ** Project management:
@@ -117,3 +118,8 @@ include::../UserGuide.adoc[tag=queuecommands]
 |===
 
 include::../DeveloperGuide.adoc[tag=queue]
+
+''''
+
+[.text-center]
+_This is the end of my project portfolio_
