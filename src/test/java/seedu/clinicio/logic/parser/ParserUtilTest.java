@@ -9,6 +9,8 @@ import static seedu.clinicio.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.clinicio.model.staff.Role.DOCTOR;
 import static seedu.clinicio.model.staff.Role.RECEPTIONIST;
 
+import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_MEDICINE;
+import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -23,6 +25,11 @@ import org.junit.rules.ExpectedException;
 import seedu.clinicio.logic.parser.exceptions.ParseException;
 import seedu.clinicio.model.appointment.Date;
 import seedu.clinicio.model.appointment.Time;
+import seedu.clinicio.model.medicine.MedicineDosage;
+import seedu.clinicio.model.medicine.MedicineName;
+import seedu.clinicio.model.medicine.MedicinePrice;
+import seedu.clinicio.model.medicine.MedicineQuantity;
+import seedu.clinicio.model.medicine.MedicineType;
 import seedu.clinicio.model.patient.Allergy;
 import seedu.clinicio.model.patient.MedicalProblem;
 import seedu.clinicio.model.patient.Medication;
@@ -62,6 +69,12 @@ public class ParserUtilTest {
     private static final String INVALID_MED = "a@bc";
     private static final String INVALID_ALLERGY = "D^st";
 
+    private static final String INVALID_MEDICINE_NAME = "Chee%e";
+    private static final String INVALID_MEDICINE_TYPE = "Cheese";
+    private static final String INVALID_DOSAGE = "12345";
+    private static final String INVALID_PRICE = "17";
+    private static final String INVALID_QUANTITY = "14A5";
+
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
@@ -85,6 +98,12 @@ public class ParserUtilTest {
     private static final String VALID_ALLERGY_1 = "Gluten Products";
     private static final String VALID_ALLERGY_2 = "Dust";
 
+    private static final String VALID_MEDICINE_NAME = "Paracetamol";
+    private static final String VALID_MEDICINE_TYPE = "Tablet";
+    private static final String VALID_DOSAGE = "717";
+    private static final String VALID_PRICE = "0.05";
+    private static final String VALID_QUANTITY = "1000";
+
     private static final String WHITESPACE = " \t\r\n";
 
     @Rule
@@ -107,9 +126,13 @@ public class ParserUtilTest {
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_MEDICINE, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_PATIENT, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_MEDICINE, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_PATIENT, ParserUtil.parseIndex("  1  "));
     }
 
     @Test
@@ -619,4 +642,121 @@ public class ParserUtilTest {
         Staff expectedStaff = new Staff(DOCTOR, new Name(VALID_NAME));
         assertEquals(expectedStaff, ParserUtil.parsePreferredDoctor(nameWithWhitespace));
     }
+
+    //@@author aaronseahyh
+    @Test
+    public void parseMedicineName_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMedicineName((String) null));
+    }
+
+    @Test
+    public void parseMedicineName_invalidValue_throwsParseException() {
+        Assert.assertThrows(ParseException.class, () -> ParserUtil.parseMedicineName(INVALID_MEDICINE_NAME));
+    }
+
+    @Test
+    public void parseMedicineName_validValueWithoutWhitespace_returnsMedicineName() throws Exception {
+        MedicineName expectedMedicineName = new MedicineName(VALID_MEDICINE_NAME);
+        assertEquals(expectedMedicineName, ParserUtil.parseMedicineName(VALID_MEDICINE_NAME));
+    }
+
+    @Test
+    public void parseMedicineName_validValueWithWhitespace_returnsTrimmedMedicineName() throws Exception {
+        String medicineNameWithWhitespace = WHITESPACE + VALID_MEDICINE_NAME + WHITESPACE;
+        MedicineName expectedMedicineName = new MedicineName(VALID_MEDICINE_NAME);
+        assertEquals(expectedMedicineName, ParserUtil.parseMedicineName(medicineNameWithWhitespace));
+    }
+
+    @Test
+    public void parseMedicineType_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseMedicineType((String) null));
+    }
+
+    @Test
+    public void parseMedicineType_invalidValue_throwsParseException() {
+        Assert.assertThrows(ParseException.class, () -> ParserUtil.parseMedicineType(INVALID_MEDICINE_TYPE));
+    }
+
+    @Test
+    public void parseMedicineType_validValueWithoutWhitespace_returnsMedicineType() throws Exception {
+        MedicineType expectedMedicineType = new MedicineType(VALID_MEDICINE_TYPE);
+        assertEquals(expectedMedicineType, ParserUtil.parseMedicineType(VALID_MEDICINE_TYPE));
+    }
+
+    @Test
+    public void parseMedicineType_validValueWithWhitespace_returnsTrimmedMedicineType() throws Exception {
+        String medicineTypeWithWhitespace = WHITESPACE + VALID_MEDICINE_TYPE + WHITESPACE;
+        MedicineType expectedMedicineType = new MedicineType(VALID_MEDICINE_TYPE);
+        assertEquals(expectedMedicineType, ParserUtil.parseMedicineType(medicineTypeWithWhitespace));
+    }
+
+    @Test
+    public void parseMedicineDosage_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDosage((String) null));
+    }
+
+    @Test
+    public void parseMedicineDosage_invalidValue_throwsParseException() {
+        Assert.assertThrows(ParseException.class, () -> ParserUtil.parseDosage(INVALID_DOSAGE));
+    }
+
+    @Test
+    public void parseMedicineDosage_validValueWithoutWhitespace_returnsMedicineDosage() throws Exception {
+        MedicineDosage expectedMedicineDosage = new MedicineDosage(VALID_DOSAGE);
+        assertEquals(expectedMedicineDosage, ParserUtil.parseDosage(VALID_DOSAGE));
+    }
+
+    @Test
+    public void parseMedicineDosage_validValueWithWhitespace_returnsTrimmedMedicineDosage() throws Exception {
+        String medicineDosageWithWhitespace = WHITESPACE + VALID_DOSAGE + WHITESPACE;
+        MedicineDosage expectedMedicineDosage = new MedicineDosage(VALID_DOSAGE);
+        assertEquals(expectedMedicineDosage, ParserUtil.parseDosage(medicineDosageWithWhitespace));
+    }
+
+    @Test
+    public void parseMedicinePrice_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePrice((String) null));
+    }
+
+    @Test
+    public void parseMedicinePrice_invalidValue_throwsParseException() {
+        Assert.assertThrows(ParseException.class, () -> ParserUtil.parsePrice(INVALID_PRICE));
+    }
+
+    @Test
+    public void parseMedicinePrice_validValueWithoutWhitespace_returnsMedicinePrice() throws Exception {
+        MedicinePrice expectedMedicinePrice = new MedicinePrice(VALID_PRICE);
+        assertEquals(expectedMedicinePrice, ParserUtil.parsePrice(VALID_PRICE));
+    }
+
+    @Test
+    public void parseMedicinePrice_validValueWithWhitespace_returnsTrimmedMedicinePrice() throws Exception {
+        String medicinePriceWithWhitespace = WHITESPACE + VALID_PRICE + WHITESPACE;
+        MedicinePrice expectedMedicinePrice = new MedicinePrice(VALID_PRICE);
+        assertEquals(expectedMedicinePrice, ParserUtil.parsePrice(medicinePriceWithWhitespace));
+    }
+
+    @Test
+    public void parseMedicineQuantity_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseQuantity((String) null));
+    }
+
+    @Test
+    public void parseMedicineQuantity_invalidValue_throwsParseException() {
+        Assert.assertThrows(ParseException.class, () -> ParserUtil.parseQuantity(INVALID_QUANTITY));
+    }
+
+    @Test
+    public void parseMedicineQuantity_validValueWithoutWhitespace_returnsMedicineQuantity() throws Exception {
+        MedicineQuantity expectedMedicineQuantity = new MedicineQuantity(VALID_QUANTITY);
+        assertEquals(expectedMedicineQuantity, ParserUtil.parseQuantity(VALID_QUANTITY));
+    }
+
+    @Test
+    public void parseMedicineQuantity_validValueWithWhitespace_returnsTrimmedMedicineQuantity() throws Exception {
+        String medicineQuantityWithWhitespace = WHITESPACE + VALID_QUANTITY + WHITESPACE;
+        MedicineQuantity expectedMedicineQuantity = new MedicineQuantity(VALID_QUANTITY);
+        assertEquals(expectedMedicineQuantity, ParserUtil.parseQuantity(medicineQuantityWithWhitespace));
+    }
+
 }

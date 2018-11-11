@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.clinicio.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.clinicio.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.clinicio.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
+import static seedu.clinicio.testutil.TypicalIndexes.INDEX_SECOND_PATIENT;
+import static seedu.clinicio.testutil.TypicalIndexes.INDEX_THIRD_PATIENT;
 import static seedu.clinicio.testutil.TypicalPersons.getTypicalClinicIo;
 
 import org.junit.Rule;
@@ -40,8 +40,8 @@ public class SelectCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_PATIENT);
+        assertExecutionSuccess(INDEX_THIRD_PATIENT);
         assertExecutionSuccess(lastPersonIndex);
     }
 
@@ -54,18 +54,18 @@ public class SelectCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST_PATIENT);
+        showPersonAtIndex(expectedModel, INDEX_FIRST_PATIENT);
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        assertExecutionSuccess(INDEX_FIRST_PATIENT);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        showPersonAtIndex(expectedModel, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST_PATIENT);
+        showPersonAtIndex(expectedModel, INDEX_FIRST_PATIENT);
 
-        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundsIndex = INDEX_SECOND_PATIENT;
         // ensures that outOfBoundIndex is still in bounds of ClinicIO list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getClinicIo().getPersonList().size());
 
@@ -74,14 +74,14 @@ public class SelectCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PATIENT);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PATIENT);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PATIENT);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false

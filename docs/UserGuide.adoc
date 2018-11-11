@@ -263,7 +263,7 @@ to allow you to manage the clinic's patient record more efficiently.
 
 Here are the list of commands:
 
-==== Adding a patient: `addpatient` `[coming in v2.0]`
+==== Adding a patient: `addpatient`
 
 // tag::loginReceptionist[]
 [WARNING]
@@ -271,7 +271,8 @@ You must login as a receptionist in order to use this feature. +
 // end::loginReceptionist[]
 
 You can add a patient to the clinic record. +
-Format: `addpatient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [medProb/MEDICAL_PROBLEMS]... [medList/MEDICATIONS]... [allergies/ALLERGIES]... [preferredDoc/PREFERRED_DOC]`
+
+Format: `addpatient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [medProb/MEDICAL_PROBLEMS]... [med/MEDICATIONS]... [alrg/ALLERGIES]... [preDr/PREFERRED_DOC]`
 
 [TIP]
 A patient can have any number of medical problems, medications, allergies (including 0) +
@@ -279,10 +280,13 @@ A patient can have any number of medical problems, medications, allergies (inclu
 [TIP]
 A patient does not need to choose a preferred doctor.
 
+[NOTE]
+You must choose a preferred doctor that exists inside ClinicIO record.
+
 Examples:
 
-* `addpatient n/John Doe ic/S1234567D p/98765432 e/johnd@example.com a/John street, block 123, #01-01 allergies/Dairy Products`
-* `addpatient n/Betsy Crowe ic/S2231414A e/betsycrowe@example.com a/Newgate Prison p/1234567 medProb/High Blood Pressure, Asthma`
+* `addpatient n/John Doe ic/S1234567D p/98765432 e/johnd@example.com a/John street, block 123, #01-01 alrg/Dairy Products`
+* `addpatient n/Betsy Crowe ic/S2231414A e/betsycrowe@example.com a/Newgate Prison p/1234567 medProb/High Blood Pressure med/Chlorothiazide`
 
 ==== Listing all patients : `listpatient` `[coming in v2.0]`
 
@@ -292,7 +296,7 @@ Format: `listpatient`
 ==== Editing a patient : `editpatient` `[coming in v2.0]`
 
 You can edit an existing patient in the clinic record. +
-Format: `editpatient INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [medProb/MEDICAL_PROBLEMS]... [medList/MEDICATIONS]... [allergies/ALLERGIES]... [preferredDoc/PREFERRED_DOC]`
+Format: `editpatient INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [medProb/MEDICAL_PROBLEMS]... [med/MEDICATIONS]... [alrg/ALLERGIES]... [preDr/PREFERRED_DOC]`
 
 ****
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index *must be a positive integer* 1, 2, 3, ...
@@ -300,9 +304,9 @@ Format: `editpatient INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDR
 * Existing values will be updated to the input values.
 * When editing medical problems/medications/allergies/preferred doctor, the existing medical problems/medications/allergies/preferred doctor of the patient will be removed i.e adding of medical problems/medications/allergies/preferred doctor is not cumulative.
 * You can remove all the patient's medical problems by typing `medProb/` without specifying any medical problems after it.
-* You can remove all the patient's medications by typing `medList/` without specifying any medications after it.
-* You can remove all the patient's allergies by typing `allergies/` without specifying any allergies after it.
-* You can remove all the patient's preferred doctor by typing `preferredDoc/` without specifying any preferred doctor after it.
+* You can remove all the patient's medications by typing `med/` without specifying any medications after it.
+* You can remove all the patient's allergies by typing `alrg/` without specifying any allergies after it.
+* You can remove all the patient's preferred doctor by typing `preDr/` without specifying any preferred doctor after it.
 ****
 
 Examples:
@@ -656,16 +660,16 @@ This section is designed to provide a comprehensive list of commands for you.
 === User Authentication Commands
 
 * *Login* : `login r/ROLE n/NAME pass/PASSWORD` +
-e.g. `login r/doctor n/Adam Bell pass/-------`
+e.g. `login r/doctor n/Adam Bell pass/doctor1`
 * *Logout* : `logout`
 
 === Patient Management Commands
 
-* *Add patient* `addpatient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [medProb/MEDICAL_PROBLEMS]... [medList/MEDICATIONS]... [allergies/ALLERGIES]... [preferredDoc/PREFERRED_DOC]` +
-e.g. `addpatient n/John Doe ic/S1234567D p/98765432 e/johnd@example.com a/John's Lane, block 123, #01-01 allergies/Dairy Products`
+* *Add patient* `addpatient n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS [medProb/MEDICAL_PROBLEMS]... [med/MEDICATIONS]... [alrg/ALLERGIES]... [preDr/PREFERRED_DOC]` +
+e.g. `addpatient n/John Doe ic/S1234567D p/98765432 e/johnd@example.com a/John's Lane, block 123, #01-01 alrg/Dairy Products`
 * *Delete patient* : `deletepatient INDEX` +
 e.g. `deletepatient 3`
-* *Edit patient* : `editpatient INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [medProb/MEDICAL_PROBLEMS]... [medList/MEDICATIONS]... [allergies/ALLERGIES]... [preferredDoc/PREFERRED_DOC]` +
+* *Edit patient* : `editpatient INDEX [n/NAME] [ic/NRIC] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [medProb/MEDICAL_PROBLEMS]... [med/MEDICATIONS]... [alrg/ALLERGIES]... [preDr/PREFERRED_DOC]` +
 e.g. `editpatient 2 n/James Lee e/jameslee@example.com`
 * *Find patient* : `findpatient KEYWORD [MORE_KEYWORDS]` +
 e.g. `findpatient James Jake`

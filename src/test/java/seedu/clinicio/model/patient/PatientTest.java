@@ -40,19 +40,19 @@ public class PatientTest {
     @Test
     public void isSamePatient() {
 
-        // same name, different preferred staff -> returns false
+        // same name, different preferred staff -> returns true
         Patient editedAlexWithPreferredDoctor = new PatientBuilder(ALEX)
                 .withPreferredDoctor(ADAM).build();
         Patient editedAlexWithAnotherPreferredDoctor = new PatientBuilder(ALEX)
                 .withPreferredDoctor(BEN).build();
-        assertFalse(editedAlexWithPreferredDoctor
+        assertTrue(editedAlexWithPreferredDoctor
                 .isSamePatient(editedAlexWithAnotherPreferredDoctor));
 
-        // same name, one with preferred staff, one without -> returns false
+        // same name, one with preferred staff, one without -> returns true
         editedAlexWithPreferredDoctor = new PatientBuilder(ALEX)
                 .withPreferredDoctor(DAISY).build();
         Patient editedAlexWithoutPreferredDoctor = new PatientBuilder(ALEX).build();
-        assertFalse(editedAlexWithPreferredDoctor.isSamePatient(editedAlexWithoutPreferredDoctor));
+        assertTrue(editedAlexWithPreferredDoctor.isSamePatient(editedAlexWithoutPreferredDoctor));
 
         // same name, same preferred staff, different attributes -> returns true
         Patient editedAlexWithPreferredDoctorAndBobAddress = new PatientBuilder(ALEX)

@@ -2,8 +2,6 @@ package seedu.clinicio.ui.util;
 
 import static seedu.clinicio.logic.parser.CliSyntax.PREFIX_PASSWORD;
 
-import javafx.scene.control.TextField;
-
 //@@author jjlee050
 /**
  * A formatter class responsible to handle
@@ -11,58 +9,56 @@ import javafx.scene.control.TextField;
  */
 public class PasswordPrefixFormatter {
 
-    private TextField commandTextField;
     private StringBuilder tempPassword;
 
-    public PasswordPrefixFormatter(TextField commandTextField) {
+    public PasswordPrefixFormatter() {
         tempPassword = new StringBuilder();
-        this.commandTextField = commandTextField;
     }
 
     /**
      * Check if {@code CommandBox} has password prefix (pass/).
      */
-    public boolean hasPasswordPrefix() {
-        return commandTextField.getText().contains(PREFIX_PASSWORD.getPrefix());
+    public boolean hasPasswordPrefix(String commandTextValue) {
+        return commandTextValue.contains(PREFIX_PASSWORD.getPrefix());
     }
 
     /**
      * Mask the password after pass/ prefix to '-'.
      */
-    public String maskPassword(boolean isHistory, boolean isBackspace) {
-        if (!hasPasswordPrefix()) {
-            return commandTextField.getText();
+    public String maskPassword(String commandTextValue, boolean isHistory, boolean isBackspace) {
+        if (!hasPasswordPrefix(commandTextValue)) {
+            return commandTextValue;
         }
 
-        int passwordPrefixIndex = commandTextField.getText().indexOf(PREFIX_PASSWORD.getPrefix());
-        int spaceAfterPasswordIndex = commandTextField.getText().indexOf(' ', passwordPrefixIndex);
+        int passwordPrefixIndex = commandTextValue.indexOf(PREFIX_PASSWORD.getPrefix());
+        int spaceAfterPasswordIndex = commandTextValue.indexOf(' ', passwordPrefixIndex);
 
-        String prefixesBeforePasswordPrefix = commandTextField.getText().substring(0, passwordPrefixIndex);
-        String password = findPassword(passwordPrefixIndex, spaceAfterPasswordIndex);
+        String prefixesBeforePasswordPrefix = commandTextValue.substring(0, passwordPrefixIndex);
+        String password = findPassword(commandTextValue, passwordPrefixIndex, spaceAfterPasswordIndex);
 
         StringBuilder maskedPassword = appendMaskedPassword(isHistory, isBackspace, password, spaceAfterPasswordIndex);
 
         return prefixesBeforePasswordPrefix + PREFIX_PASSWORD.getPrefix()
-                + maskedPassword.toString() + getPrefixesAfterPasswordPrefix(spaceAfterPasswordIndex);
+                + maskedPassword.toString() + getPrefixesAfterPasswordPrefix(commandTextValue, spaceAfterPasswordIndex);
     }
 
     /**
      * Unmask the password that has been hidden with '-'.
      */
-    public String unmaskPassword() {
-        if (!hasPasswordPrefix()) {
-            return commandTextField.getText();
+    public String unmaskPassword(String commandTextValue) {
+        if (!hasPasswordPrefix(commandTextValue)) {
+            return commandTextValue;
         }
 
-        int passwordPrefixIndex = commandTextField.getText().indexOf("pass/");
-        int spaceAfterPasswordIndex = commandTextField.getText().indexOf(' ', passwordPrefixIndex);
+        int passwordPrefixIndex = commandTextValue.indexOf("pass/");
+        int spaceAfterPasswordIndex = commandTextValue.indexOf(' ', passwordPrefixIndex);
 
-        String prefixesBeforePasswordPrefix = commandTextField.getText().substring(0, passwordPrefixIndex);
-        String password = findPassword(passwordPrefixIndex, spaceAfterPasswordIndex);
+        String prefixesBeforePasswordPrefix = commandTextValue.substring(0, passwordPrefixIndex);
+        String password = findPassword(commandTextValue, passwordPrefixIndex, spaceAfterPasswordIndex);
 
         String commandText = prefixesBeforePasswordPrefix + PREFIX_PASSWORD.getPrefix();
         commandText = comparePasswordWithTempPassword(password, commandText)
-                + getPrefixesAfterPasswordPrefix(spaceAfterPasswordIndex);
+                + getPrefixesAfterPasswordPrefix(commandTextValue, spaceAfterPasswordIndex);
 
         resetTempPassword();
 
@@ -117,12 +113,12 @@ public class PasswordPrefixFormatter {
      * @param spaceAfterPasswordIndex The index after password is entered.
      * @return The password entered by user.
      */
-    public String findPassword(int passwordPrefixIndex, int spaceAfterPasswordIndex) {
+    public String findPassword(String commandTextValue, int passwordPrefixIndex, int spaceAfterPasswordIndex) {
         if (spaceAfterPasswordIndex > 0) {
-            return commandTextField.getText()
+            return commandTextValue
                     .substring(passwordPrefixIndex + 5, spaceAfterPasswordIndex);
         }
-        return commandTextField.getText().substring(passwordPrefixIndex + 5);
+        return commandTextValue.substring(passwordPrefixIndex + 5);
     }
 
     /**
@@ -165,11 +161,11 @@ public class PasswordPrefixFormatter {
      * @param spaceAfterPasswordIndex The index after password is entered.
      * @return Any text entered after password prefix
      */
-    public String getPrefixesAfterPasswordPrefix(int spaceAfterPasswordIndex) {
+    public String getPrefixesAfterPasswordPrefix(String commandTextValue, int spaceAfterPasswordIndex) {
         if (spaceAfterPasswordIndex <= 0) {
             return "";
         }
-        return commandTextField.getText().substring(spaceAfterPasswordIndex);
+        return commandTextValue.substring(spaceAfterPasswordIndex);
     }
 
     /**

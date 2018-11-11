@@ -73,6 +73,8 @@ public class MainApp extends Application {
 
         ui = new UiManager(logic, config, userPrefs);
 
+        model.addUi(ui);
+
         initEventsCenter();
     }
 
@@ -97,7 +99,7 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty ClinicIO");
             initialData = new ClinicIo();
         }
-
+        //@@author iamjackslayer
         return new ModelManager(initialData, userPrefs);
     }
 

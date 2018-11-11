@@ -7,4 +7,13 @@
         <email isPrivate="false">hans@exam!32ple</email>
         <address isPrivate="false">4th street</address>
     </persons>
+    <!-- Medicine with invalid effective dosage field -->
+    <medicines>
+        <medicineName>Paracetamol</medicineName>
+        <medicineType isPrivate="false">Tablet</medicineType>
+        <effectiveDosage isPrivate="false">12345</effectiveDosage>
+        <lethalDosage isPrivate="false">8</lethalDosage>
+        <price isPrivate="false">0.05</price>
+        <quantity isPrivate="false">1000</quantity>
+    </medicines>
 </clinicio>

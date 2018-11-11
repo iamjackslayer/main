@@ -1,5 +1,7 @@
 package seedu.clinicio.model.analytics.data;
 
+import static seedu.clinicio.model.analytics.Statistics.DEFAULT_SUMMARY_VALUE;
+
 import java.util.List;
 
 //@@author arsalanc-v2
@@ -8,8 +10,6 @@ import java.util.List;
  * Data structure to store data required to create summaries.
  */
 public class SummaryData {
-
-    public static final int DEFAULT_SUMMARY_VALUE = 0;
 
     private String title;
     private List<Tuple<String, Integer>> summaryElements;

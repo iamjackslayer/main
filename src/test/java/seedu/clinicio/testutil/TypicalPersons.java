@@ -148,7 +148,9 @@ public class TypicalPersons {
     public static final Patient BRYAN = new PatientBuilder().withName(VALID_NAME_BRYAN).withNric(VALID_NRIC_BRYAN)
             .withPhone(VALID_PHONE_BRYAN).withEmail(VALID_EMAIL_BRYAN).withAddress(VALID_ADDRESS_BRYAN)
             .withPreferredDoctor(new Staff(DOCTOR, ADAM.getName(), new Password("123456", false))).build();
-
+    public static final Patient DANNY = new PatientBuilder().withName("Danny Shaw").withNric("S9741314I")
+            .withPhone("90192910").withEmail("ds@live.com").withAddress("780, Woodlands Ave 12, #12-683")
+            .withPreferredDoctor(new Staff(DOCTOR, ADAM.getName(), new Password("123456", false))).build();
     //Not inside ClinicIO
     public static final Patient CANDY = new PatientBuilder().withName(VALID_NAME_CANDY)
             .withNric(VALID_NRIC_CANDY).build();
@@ -218,11 +220,11 @@ public class TypicalPersons {
             clinicIo.addAppointment(appointment);
         }
         */
-        /*
+
         for (Medicine medicine : getTypicalMedicines()) {
             clinicIo.addMedicine(medicine);
         }
-        */
+
         return clinicIo;
     }
 

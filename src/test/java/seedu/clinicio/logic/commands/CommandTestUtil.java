@@ -31,6 +31,8 @@ import seedu.clinicio.logic.commands.exceptions.CommandException;
 import seedu.clinicio.model.ClinicIo;
 import seedu.clinicio.model.Model;
 import seedu.clinicio.model.analytics.Analytics;
+import seedu.clinicio.model.medicine.Medicine;
+import seedu.clinicio.model.medicine.MedicineNameContainsKeywordsPredicate;
 import seedu.clinicio.model.person.NameContainsKeywordsPredicate;
 import seedu.clinicio.model.person.Person;
 import seedu.clinicio.testutil.EditPersonDescriptorBuilder;
@@ -162,52 +164,28 @@ public class CommandTestUtil {
 
     public static final String MEDICINENAME_DESC_PARACETAMOL = " " + PREFIX_MEDICINE_NAME
             + VALID_MEDICINENAME_PARACETAMOL;
-    public static final String MEDICINENAME_DESC_VENTOLIN = " " + PREFIX_MEDICINE_NAME
-            + VALID_MEDICINENAME_VENTOLIN;
     public static final String MEDICINENAME_DESC_ORACORT = " " + PREFIX_MEDICINE_NAME
             + VALID_MEDICINENAME_ORACORT;
-    public static final String MEDICINENAME_DESC_CHLORPHENIRAMINE = " " + PREFIX_MEDICINE_NAME
-            + VALID_MEDICINENAME_CHLORPHENIRAMINE;
     public static final String MEDICINETYPE_DESC_PARACETAMOL = " " + PREFIX_MEDICINE_TYPE
             + VALID_MEDICINETYPE_PARACETAMOL;
-    public static final String MEDICINETYPE_DESC_VENTOLIN = " " + PREFIX_MEDICINE_TYPE
-            + VALID_MEDICINETYPE_VENTOLIN;
     public static final String MEDICINETYPE_DESC_ORACORT = " " + PREFIX_MEDICINE_TYPE
             + VALID_MEDICINETYPE_ORACORT;
-    public static final String MEDICINETYPE_DESC_CHLORPHENIRAMINE = " " + PREFIX_MEDICINE_TYPE
-            + VALID_MEDICINETYPE_CHLORPHENIRAMINE;
     public static final String EFFECTIVEDOSAGE_DESC_PARACETAMOL = " " + PREFIX_MEDICINE_EFFECTIVE_DOSAGE
             + VALID_EFFECTIVEDOSAGE_PARACETAMOL;
-    public static final String EFFECTIVEDOSAGE_DESC_VENTOLIN = " " + PREFIX_MEDICINE_EFFECTIVE_DOSAGE
-            + VALID_EFFECTIVEDOSAGE_VENTOLIN;
     public static final String EFFECTIVEDOSAGE_DESC_ORACORT = " " + PREFIX_MEDICINE_EFFECTIVE_DOSAGE
             + VALID_EFFECTIVEDOSAGE_ORACORT;
-    public static final String EFFECTIVEDOSAGE_DESC_CHLORPHENIRAMINE = " " + PREFIX_MEDICINE_EFFECTIVE_DOSAGE
-            + VALID_EFFECTIVEDOSAGE_CHLORPHENIRAMINE;
     public static final String LETHALDOSAGE_DESC_PARACETAMOL = " " + PREFIX_MEDICINE_LETHAL_DOSAGE
             + VALID_LETHALDOSAGE_PARACETAMOL;
-    public static final String LETHALDOSAGE_DESC_VENTOLIN = " " + PREFIX_MEDICINE_LETHAL_DOSAGE
-            + VALID_LETHALDOSAGE_VENTOLIN;
     public static final String LETHALDOSAGE_DESC_ORACORT = " " + PREFIX_MEDICINE_LETHAL_DOSAGE
             + VALID_LETHALDOSAGE_ORACORT;
-    public static final String LETHALDOSAGE_DESC_CHLORPHENIRAMINE = " " + PREFIX_MEDICINE_LETHAL_DOSAGE
-            + VALID_LETHALDOSAGE_CHLORPHENIRAMINE;
     public static final String PRICE_DESC_PARACETAMOL = " " + PREFIX_MEDICINE_PRICE
             + VALID_PRICE_PARACETAMOL;
-    public static final String PRICE_DESC_VENTOLIN = " " + PREFIX_MEDICINE_PRICE
-            + VALID_PRICE_VENTOLIN;
     public static final String PRICE_DESC_ORACORT = " " + PREFIX_MEDICINE_PRICE
             + VALID_PRICE_ORACORT;
-    public static final String PRICE_DESC_CHLORPHENIRAMINE = " " + PREFIX_MEDICINE_PRICE
-            + VALID_PRICE_CHLORPHENIRAMINE;
     public static final String QUANTITY_DESC_PARACETAMOL = " " + PREFIX_MEDICINE_QUANTITY
             + VALID_QUANTITY_PARACETAMOL;
-    public static final String QUANTITY_DESC_VENTOLIN = " " + PREFIX_MEDICINE_QUANTITY
-            + VALID_QUANTITY_VENTOLIN;
     public static final String QUANTITY_DESC_ORACORT = " " + PREFIX_MEDICINE_QUANTITY
             + VALID_QUANTITY_ORACORT;
-    public static final String QUANTITY_DESC_CHLORPHENIRAMINE = " " + PREFIX_MEDICINE_QUANTITY
-            + VALID_QUANTITY_CHLORPHENIRAMINE;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -227,10 +205,10 @@ public class CommandTestUtil {
 
     public static final String INVALID_MEDICINENAME_DESC = " " + PREFIX_MEDICINE_NAME + "Cheese&";
     public static final String INVALID_MEDICINETYPE_DESC = " " + PREFIX_MEDICINE_TYPE + "Cheese1";
-    public static final String INVALID_EFFECTIVEDOSAGE_DESC = " " + PREFIX_MEDICINE_TYPE + "Cheese2";
-    public static final String INVALID_LETHALDOSAGE_DESC = " " + PREFIX_MEDICINE_TYPE + "Cheese3";
-    public static final String INVALID_PRICE_DESC = " " + PREFIX_MEDICINE_TYPE + "Cheese4";
-    public static final String INVALID_QUANTITY_DESC = " " + PREFIX_MEDICINE_TYPE + "Cheese5";
+    public static final String INVALID_EFFECTIVEDOSAGE_DESC = " " + PREFIX_MEDICINE_EFFECTIVE_DOSAGE + "Cheese2";
+    public static final String INVALID_LETHALDOSAGE_DESC = " " + PREFIX_MEDICINE_LETHAL_DOSAGE + "Cheese3";
+    public static final String INVALID_PRICE_DESC = " " + PREFIX_MEDICINE_PRICE + "Cheese4";
+    public static final String INVALID_QUANTITY_DESC = " " + PREFIX_MEDICINE_QUANTITY + "Cheese5";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -311,6 +289,31 @@ public class CommandTestUtil {
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);
         model.deletePerson(firstPerson);
+        model.commitClinicIo();
+    }
+
+    //@@author aaronseahyh
+    /**
+     * Updates {@code model}'s filtered list to show only the medicine at the given {@code targetIndex} in the
+     * {@code model}'s ClinicIO.
+     */
+    public static void showMedicineAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredMedicineList().size());
+
+        Medicine medicine = model.getFilteredMedicineList().get(targetIndex.getZeroBased());
+        final String[] splitName = medicine.getMedicineName().medicineName.split("\\s+");
+        model.updateFilteredMedicineList(new MedicineNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertEquals(1, model.getFilteredMedicineList().size());
+    }
+
+    //@@author aaronseahyh
+    /**
+     * Deletes the first medicine in {@code model}'s filtered medicine list from {@code model}'s ClinicIO.
+     */
+    public static void deleteFirstMedicine(Model model) {
+        Medicine firstMedicine = model.getFilteredMedicineList().get(0);
+        model.deleteMedicine(firstMedicine);
         model.commitClinicIo();
     }
 

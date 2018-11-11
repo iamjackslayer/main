@@ -36,11 +36,13 @@ public interface ReadOnlyClinicIo {
      */
     ObservableList<Appointment> getAppointmentList();
 
+    //@@author iamjackslayer
+    ObservableList<Patient> getQueue();
+
     //@@author aaronseahyh
     /**
      * Returns an unmodifiable view of the medicine list.
      * This list will not contain any duplicate medicines.
      */
     ObservableList<Medicine> getMedicineList();
-
 }

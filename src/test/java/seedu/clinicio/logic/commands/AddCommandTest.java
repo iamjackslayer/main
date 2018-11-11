@@ -32,6 +32,7 @@ import seedu.clinicio.model.person.Person;
 import seedu.clinicio.model.staff.Staff;
 
 import seedu.clinicio.testutil.PersonBuilder;
+import seedu.clinicio.ui.Ui;
 
 public class AddCommandTest {
 
@@ -101,6 +102,22 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
+        public void addUi(Ui ui) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        //@@author iamjackslayer
+        @Override
+        public void switchTab(int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateQueue(Predicate<Patient> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addPerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
@@ -152,6 +169,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deletePatient(Patient target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(Person target, Person editedPerson) {
             throw new AssertionError("This method should not be called.");
         }
@@ -166,8 +188,9 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        //@@author iamjackslayer
         @Override
-        public ObservableList<Person> getAllPatientsInQueue() {
+        public ObservableList<Patient> getAllPatientsInQueue() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -398,6 +421,11 @@ public class AddCommandTest {
             requireNonNull(person);
             return this.person.isSamePerson(person);
         }
+
+        @Override
+        public void switchTab(int index) {
+            // do nothing since it is ui change.
+        }
     }
 
     /**
@@ -427,6 +455,12 @@ public class AddCommandTest {
         public ReadOnlyClinicIo getClinicIo() {
             return new ClinicIo();
         }
+
+        @Override
+        public void switchTab(int index) {
+            // do nothing since this is ui change
+        }
+
     }
 
 }

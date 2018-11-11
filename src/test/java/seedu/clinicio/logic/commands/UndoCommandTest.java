@@ -2,6 +2,7 @@ package seedu.clinicio.logic.commands;
 
 import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.clinicio.logic.commands.CommandTestUtil.deleteFirstMedicine;
 import static seedu.clinicio.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.clinicio.testutil.TypicalPersons.getTypicalClinicIo;
 
@@ -25,10 +26,10 @@ public class UndoCommandTest {
     public void setUp() {
         // set up of models' undo/redo history
         deleteFirstPerson(model);
-        deleteFirstPerson(model);
+        deleteFirstMedicine(model);
 
         deleteFirstPerson(expectedModel);
-        deleteFirstPerson(expectedModel);
+        deleteFirstMedicine(expectedModel);
     }
 
     @Test

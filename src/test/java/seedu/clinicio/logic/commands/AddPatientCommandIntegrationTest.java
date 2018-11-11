@@ -4,6 +4,7 @@ import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandFailure
 import static seedu.clinicio.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.clinicio.testutil.TypicalPersons.ALAN;
 import static seedu.clinicio.testutil.TypicalPersons.ALEX;
+import static seedu.clinicio.testutil.TypicalPersons.FRANK;
 import static seedu.clinicio.testutil.TypicalPersons.getTypicalClinicIo;
 
 import org.junit.Before;
@@ -53,6 +54,15 @@ public class AddPatientCommandIntegrationTest {
         Patient patientInList = model.getClinicIo().getPatientList().get(0);
         assertCommandFailure(new AddPatientCommand(patientInList), model, commandHistory,
                 analytics, AddPatientCommand.MESSAGE_DUPLICATE_PATIENT);
+    }
+
+    @Test
+    public void execute_preferredDoctorNotFound_throwsCommandException() {
+        UserSession.create(ALAN);
+
+        ALEX.setPreferredDoctor(FRANK);
+        assertCommandFailure(new AddPatientCommand(ALEX), model, commandHistory,
+                analytics, AddPatientCommand.MESSAGE_NO_DOCTOR_FOUND);
     }
 
 }

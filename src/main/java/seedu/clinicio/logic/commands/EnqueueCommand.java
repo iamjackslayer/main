@@ -1,4 +1,5 @@
 package seedu.clinicio.logic.commands;
+//@@author iamjackslayer
 
 import static java.util.Objects.requireNonNull;
 
@@ -12,7 +13,6 @@ import seedu.clinicio.model.Model;
 import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.person.Person;
 
-//@@author iamjackslayer
 /**
  * Enqueues a given patient (for consultation).
  */
@@ -55,8 +55,8 @@ public class EnqueueCommand extends Command {
         }
 
         model.enqueue((Patient) patientToEnqueue);
-
-        model.updateFilteredPersonList(model.PREDICATE_SHOW_ALL_PATIENTS_IN_QUEUE);
+        model.updateQueue(model.PREDICATE_SHOW_ALL_PATIENTS);
+        model.switchTab(1);
         model.commitClinicIo();
         return new CommandResult(String.format(MESSAGE_ENQUEUE_PATIENT_SUCCESS, patientToEnqueue.getName()));
     }

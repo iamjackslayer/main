@@ -1,5 +1,7 @@
 package seedu.clinicio.model.analytics;
 
+//@@author arsalanc-v2
+
 /**
  * Represent the various types of charts used by analytics.
  */
@@ -7,8 +9,7 @@ public enum ChartType {
     VERTICAL_BAR("vbar"),
     HORIZONTAL_BAR("hbar"),
     STACKED_BAR("stackedbar"),
-    LINE("line"),
-    AREA("area");
+    LINE("line");
 
     private final String type;
 

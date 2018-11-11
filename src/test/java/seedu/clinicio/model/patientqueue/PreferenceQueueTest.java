@@ -2,7 +2,7 @@ package seedu.clinicio.model.patientqueue;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.clinicio.testutil.TypicalPersons.ALICE;
+import static seedu.clinicio.testutil.TypicalPersons.ALEX;
 
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class PreferenceQueueTest {
 
     @Test
     public void hasPatient_patientInPreferenceQueue_returnTrue() {
-        modelManager.enqueueIntoPreferenceQueue(ALICE);
+        modelManager.enqueueIntoPreferenceQueue(ALEX);
         assertTrue(modelManager.hasPatientInPreferenceQueue());
     }
 }

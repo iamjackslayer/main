@@ -1,6 +1,7 @@
 package seedu.clinicio.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.clinicio.model.Model.PREDICATE_SHOW_ALL_MEDICINES;
 import static seedu.clinicio.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.clinicio.logic.CommandHistory;
@@ -26,6 +27,7 @@ public class UndoCommand extends Command {
 
         model.undoClinicIo();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredMedicineList(PREDICATE_SHOW_ALL_MEDICINES);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

@@ -19,7 +19,6 @@ import seedu.clinicio.model.UserPrefs;
 import seedu.clinicio.storage.UserPrefsStorage;
 import seedu.clinicio.storage.XmlSerializableClinicIo;
 import seedu.clinicio.testutil.TestUtil;
-import systemtests.ModelHelper;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -93,7 +92,7 @@ public class TestApp extends MainApp {
      */
     public Model getModel() {
         Model copy = new ModelManager((model.getClinicIo()), new UserPrefs());
-        ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        //ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }
 

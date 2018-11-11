@@ -126,4 +126,17 @@ public class Time {
                 .append(getMinute());
         return builder.toString();
     }
+
+    /**
+     * @return the time without labels.
+     */
+    public String toStringNoLabel() {
+        final StringBuilder builder = new StringBuilder();
+        builder
+            .append(getHour())
+            .append(" ")
+            .append(getMinute());
+
+        return builder.toString();
+    }
 }

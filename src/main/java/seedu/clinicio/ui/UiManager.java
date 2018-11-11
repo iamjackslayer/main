@@ -73,6 +73,15 @@ public class UiManager extends ComponentManager implements Ui {
         mainWindow.hide();
     }
 
+    //@@author iamjackslayer
+    /**
+     * Switches the current tab to the tab of given index.
+     * @param index
+     */
+    public void switchTab(int index) {
+        mainWindow.switchTab(index);
+    }
+
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
         final String content = details + ":\n" + cause.toString();
         showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_STAGE_TITLE, description, content);

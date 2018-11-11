@@ -4,8 +4,7 @@ package seedu.clinicio.model.analytics.data;
 
 /**
  * Represents a pair.
- * @param <K>
- * @param <V>
+ * Provides greater flexibility than common library implementations.
  */
 public class Tuple<K, V> {
     private K key;
@@ -33,7 +32,7 @@ public class Tuple<K, V> {
     }
 
     public void setTuple(Tuple<K, V> tuple) {
-        this.key = tuple.getKey();
-        this.value = tuple.getValue();
+        key = tuple.getKey();
+        value = tuple.getValue();
     }
 }

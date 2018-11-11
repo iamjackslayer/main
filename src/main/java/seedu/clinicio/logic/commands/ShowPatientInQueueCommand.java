@@ -23,7 +23,7 @@ public class ShowPatientInQueueCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(model.PREDICATE_SHOW_ALL_PATIENTS_IN_QUEUE);
         model.commitClinicIo();
-
+        model.switchTab(1);
         if (model.hasPatientInPatientQueue()) {
             return new CommandResult(String.format(MESSAGE_SHOW_PATIENTS_IN_QUEUE_SUCCESS));
         } else {

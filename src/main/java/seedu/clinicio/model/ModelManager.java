@@ -32,6 +32,10 @@ import seedu.clinicio.model.patientqueue.PreferenceQueue;
 import seedu.clinicio.model.person.Person;
 import seedu.clinicio.model.staff.Staff;
 import seedu.clinicio.model.util.PatientComparator;
+import seedu.clinicio.ui.Ui;
+import seedu.clinicio.ui.UiManager;
+
+
 /**
  * Represents the in-memory model of the ClinicIO data.
  */
@@ -39,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VersionedClinicIo versionedClinicIo;
+    private final FilteredList<Patient> allPatientsInQueue;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Patient> filteredPatients;
     private final FilteredList<Staff> filteredStaffs;
@@ -48,9 +53,11 @@ public class ModelManager extends ComponentManager implements Model {
     private final MainQueue mainQueue;
     private final PreferenceQueue preferenceQueue;
     private final Analytics analytics;
+    //@@author iamjackslayer
+    private UiManager uiManager = null;
 
     /**
-     * Initializes a ModelManager with the given ClinicIO and userPrefs.
+     * Initializes a ModelManager with the given ClinicIO, userPrefs and ui.
      */
     public ModelManager(ReadOnlyClinicIo clinicIo, UserPrefs userPrefs) {
         super();
@@ -70,6 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
         //@@author iamjackslayer
         mainQueue = new MainQueue();
         preferenceQueue = new PreferenceQueue();
+        allPatientsInQueue = new FilteredList<>(versionedClinicIo.getQueue());
         //@@author arsalanc-v2
         analytics = new Analytics();
     }
@@ -94,6 +102,25 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ClinicIoChangedEvent(versionedClinicIo));
     }
 
+    //========== Ui changes ======================================================================
+
+    //@@author iamjackslayer
+    public void addUi(Ui ui) {
+        uiManager = (UiManager) ui;
+    }
+
+    /**
+     * Switches the current tab to the tab of given index.
+     * @param index the index of the tab
+     */
+    public void switchTab(int index) {
+        // if uiManager is null, it is assumed that this method is
+        // called from test classes that don't require switchTab.
+        if (uiManager != null) {
+            uiManager.switchTab(index);
+        }
+    }
+
     //========== Boolean check ===============================================================================
 
     @Override
@@ -115,6 +142,7 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedClinicIo.hasStaff(staff);
     }
 
+    //@@author iamjackslayer
     @Override
     public boolean hasPatientInMainQueue() {
         return mainQueue.hasPatient();
@@ -163,6 +191,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deletePerson(Person target) {
         versionedClinicIo.removePerson(target);
+        indicateClinicIoChanged();
+    }
+
+    @Override
+    public void deletePatient(Patient target) {
+        versionedClinicIo.removePatient(target);
         indicateClinicIoChanged();
     }
 
@@ -255,6 +289,16 @@ public class ModelManager extends ComponentManager implements Model {
             enqueueIntoMainQueue(patient);
         }
 
+        ArrayList<Patient> temp = new ArrayList<>();
+        temp.addAll(mainQueue.getList().subList(0, mainQueue.getList().size()));
+        temp.addAll(preferenceQueue.getList().subList(0, preferenceQueue.getList().size()));
+        PatientComparator<Person> comparator = new PatientComparator<>();
+        //   temp.sort(comparator);
+
+        versionedClinicIo.setQueue(temp.subList(0, temp.size()));
+
+        updateQueue(PREDICATE_SHOW_ALL_PATIENTS);
+        indicateClinicIoChanged();
         patient.setIsQueuing();
     }
 
@@ -284,7 +328,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public void enqueueIntoMainQueue(Person patient) {
-        mainQueue.add(patient);
+        mainQueue.add((Patient) patient);
     }
 
     //@@author iamjackslayer
@@ -294,7 +338,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public void enqueueIntoPreferenceQueue(Person patient) {
-        preferenceQueue.add(patient);
+        preferenceQueue.add((Patient) patient);
     }
 
     @Override
@@ -346,14 +390,20 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author iamjackslayer
     @Override
-    public ObservableList<Person> getAllPatientsInQueue() {
-        ArrayList<Person> allPatientsInQueue = new ArrayList(mainQueue.getList());
-        allPatientsInQueue.addAll(preferenceQueue.getList());
+    public void updateQueue(Predicate<Patient> predicate) {
+        requireAllNonNull(predicate);
+        allPatientsInQueue.setPredicate(predicate);
+    }
 
+    //@@author iamjackslayer
+    @Override
+    public ObservableList<Patient> getAllPatientsInQueue() {
+        allPatientsInQueue.clear();
+        allPatientsInQueue.addAll(mainQueue.getList());
+        allPatientsInQueue.addAll(preferenceQueue.getList());
         PatientComparator<Person> comparator = new PatientComparator<>();
         allPatientsInQueue.sort(comparator);
-        return FXCollections.unmodifiableObservableList(
-                new FilteredList<>(FXCollections.observableList(allPatientsInQueue)));
+        return FXCollections.unmodifiableObservableList(allPatientsInQueue);
     }
     //=========== Filtered Patient List Accessors =============================================================
 
@@ -540,14 +590,20 @@ public class ModelManager extends ComponentManager implements Model {
      * Updates statistics data depending on the type that is supplied.
      */
     public void updateAnalytics(StatisticType type) {
-        analytics.setConsultations(versionedClinicIo.getConsultationList());
         switch (type) {
+        case PATIENT:
+            analytics.setPatients(versionedClinicIo.getPatientList());
+            analytics.setConsultations(versionedClinicIo.getConsultationList());
+            break;
+
         case APPOINTMENT:
             analytics.setAppointments(versionedClinicIo.getAppointmentList());
             break;
 
         case DOCTOR:
             analytics.setDoctors(versionedClinicIo.getStaffList());
+            analytics.setPatients(versionedClinicIo.getPatientList());
+            analytics.setConsultations(versionedClinicIo.getConsultationList());
             break;
 
         default:

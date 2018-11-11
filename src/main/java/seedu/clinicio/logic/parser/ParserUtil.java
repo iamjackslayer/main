@@ -16,6 +16,11 @@ import seedu.clinicio.logic.parser.exceptions.ParseException;
 
 import seedu.clinicio.model.appointment.Date;
 import seedu.clinicio.model.appointment.Time;
+import seedu.clinicio.model.medicine.MedicineDosage;
+import seedu.clinicio.model.medicine.MedicineName;
+import seedu.clinicio.model.medicine.MedicinePrice;
+import seedu.clinicio.model.medicine.MedicineQuantity;
+import seedu.clinicio.model.medicine.MedicineType;
 import seedu.clinicio.model.patient.Allergy;
 import seedu.clinicio.model.patient.MedicalProblem;
 import seedu.clinicio.model.patient.Medication;
@@ -322,4 +327,85 @@ public class ParserUtil {
         }
         return new Staff(DOCTOR, new Name(trimmedDoctorName));
     }
+
+    //@@author aaronseahyh
+    /**
+     * Parses a {@code String medicineName} into a {@code MedicineName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code medicinename} is invalid.
+     */
+    public static MedicineName parseMedicineName(String medicineName) throws ParseException {
+        requireNonNull(medicineName);
+        String trimmedName = medicineName.trim();
+        if (!MedicineName.isValidMedicineName(trimmedName)) {
+            throw new ParseException(MedicineName.MESSAGE_MEDICINE_NAME_CONSTRAINTS);
+        }
+        return new MedicineName(trimmedName);
+    }
+
+    //@@author aaronseahyh
+    /**
+     * Parses a {@code String medicineType} into a {@code MedicineType}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code medicineType} is invalid.
+     */
+    public static MedicineType parseMedicineType(String medicineType) throws ParseException {
+        requireNonNull(medicineType);
+        String trimmedType = medicineType.trim();
+        if (!MedicineType.isValidType(trimmedType)) {
+            throw new ParseException(MedicineType.MESSAGE_MEDICINE_TYPE_CONSTRAINTS);
+        }
+        return new MedicineType(trimmedType);
+    }
+
+    //@@author aaronseahyh
+    /**
+     * Parses a {@code String dosage} into a {@code MedicineDosage}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code dosage} is invalid.
+     */
+    public static MedicineDosage parseDosage(String dosage) throws ParseException {
+        requireNonNull(dosage);
+        String trimmedDosage = dosage.trim();
+        if (!MedicineDosage.isValidMedicineDosage(trimmedDosage)) {
+            throw new ParseException(MedicineDosage.MESSAGE_MEDICINE_DOSAGE_CONSTRAINTS);
+        }
+        return new MedicineDosage(trimmedDosage);
+    }
+
+    //@@author aaronseahyh
+    /**
+     * Parses a {@code String price} into a {@code MedicinePrice}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code price} is invalid.
+     */
+    public static MedicinePrice parsePrice(String price) throws ParseException {
+        requireNonNull(price);
+        String trimmedPrice = price.trim();
+        if (!MedicinePrice.isValidMedicinePrice(trimmedPrice)) {
+            throw new ParseException(MedicinePrice.MESSAGE_MEDICINE_PRICE_CONSTRAINTS);
+        }
+        return new MedicinePrice(trimmedPrice);
+    }
+
+    //@@author aaronseahyh
+    /**
+     * Parses a {@code String quantity} into a {@code MedicineQuantity}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code quantity} is invalid.
+     */
+    public static MedicineQuantity parseQuantity(String quantity) throws ParseException {
+        requireNonNull(quantity);
+        String trimmedQuantity = quantity.trim();
+        if (!MedicineQuantity.isValidMedicineQuantity(trimmedQuantity)) {
+            throw new ParseException(MedicineQuantity.MESSAGE_MEDICINE_QUANTITY_CONSTRAINTS);
+        }
+        return new MedicineQuantity(trimmedQuantity);
+    }
+
 }

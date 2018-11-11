@@ -9,9 +9,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+
 import seedu.clinicio.commons.events.ui.AnalyticsDisplayEvent;
+import seedu.clinicio.model.analytics.data.CircularList;
 import seedu.clinicio.model.analytics.data.StatData;
 import seedu.clinicio.model.analytics.data.Tuple;
+import seedu.clinicio.model.analytics.data.VisualizationData;
 import seedu.clinicio.ui.UiPart;
 
 //@@author arsalanc-v2
@@ -50,10 +53,10 @@ public class AnalyticsDisplay extends UiPart<Region> {
     private AnchorPane chartPane;
 
     private List<Tuple<Label, Label>> summaryLabels;
+    private StatData allDataToDisplay;
 
     public AnalyticsDisplay() {
         super(FXML);
-        analyticsPane.setVisible(false);
         registerAsAnEventHandler(this);
 
         summaryLabels = Arrays.asList(
@@ -65,13 +68,35 @@ public class AnalyticsDisplay extends UiPart<Region> {
         );
     }
 
+    /**
+     * Plots the next visualization in the case where the "Previous" button is clicked.
+     */
+    @FXML
+    public void handleNextVisualization() {
+        chartPane.getChildren().clear();
+        Plot.plotChart(allDataToDisplay.getVisualizationData().getNext(), chartPane);
+    }
+
+    /**
+     * Plots the previous visualization in the case where the "Next" button is clicked.
+     */
+    @FXML
+    public void handlePreviousVisualization() {
+        chartPane.getChildren().clear();
+        Plot.plotChart(allDataToDisplay.getVisualizationData().getPrevious(), chartPane);
+    }
+
     @Subscribe
     public void handleAnalyticsDisplayEvent(AnalyticsDisplayEvent event) {
-        StatData allDataToDisplay = event.getAllData();
+        allDataToDisplay = event.getAllData();
         chartPane.getChildren().clear();
-        chartPane.setStyle("-fx-background-color: #6593F5");
-        Plot.updateVisualization(allDataToDisplay.getVisualizationData(), chartPane);
         Plot.fillSummary(allDataToDisplay.getSummaryData(), summaryBar, summaryLabels);
-        analyticsPane.setVisible(true);
+        CircularList<VisualizationData> allVisualizationData = allDataToDisplay.getVisualizationData();
+        allVisualizationData.reset();
+        Plot.plotChart(allVisualizationData.getNext(), chartPane);
+    }
+
+    public void setVisible(boolean isVisible) {
+        analyticsPane.setVisible(isVisible);
     }
 }

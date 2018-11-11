@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -22,13 +23,16 @@ import javafx.stage.Stage;
 import seedu.clinicio.commons.core.Config;
 import seedu.clinicio.commons.core.GuiSettings;
 import seedu.clinicio.commons.core.LogsCenter;
+import seedu.clinicio.commons.events.ui.AnalyticsDisplayEvent;
+import seedu.clinicio.commons.events.ui.AppointmentPanelSelectionChangedEvent;
 import seedu.clinicio.commons.events.ui.ExitAppRequestEvent;
+import seedu.clinicio.commons.events.ui.PatientPanelSelectionChangedEvent;
 import seedu.clinicio.commons.events.ui.ShowHelpRequestEvent;
 
 import seedu.clinicio.logic.Logic;
 
 import seedu.clinicio.model.UserPrefs;
-import seedu.clinicio.model.person.Person;
+import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.ui.analytics.AnalyticsDisplay;
 
 /**
@@ -46,8 +50,9 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private PatientListPanel patientListPanel;
     private AppointmentListPanel appointmentListPanel;
+    private QueuePanel queuePanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
@@ -63,10 +68,13 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane patientListPanelPlaceholder;
 
     @FXML
     private StackPane appointmentListPanelPlaceholder;
+
+    @FXML
+    private StackPane queuePanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -78,7 +86,10 @@ public class MainWindow extends UiPart<Stage> {
     private TabPane tabLists;
 
     @FXML
-    private Tab personTab;
+    private Tab patientTab;
+
+    @FXML
+    private Tab queueTab;
 
     @FXML
     private Tab appointmentTab;
@@ -144,27 +155,17 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-
-        appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
-        appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
-
-        personTab.setText("Persons");
-        personTab.setContent(personListPanelPlaceholder);
-        personTab.setClosable(false);
-
-        appointmentTab.setText("Appointments");
-        appointmentTab.setContent(appointmentListPanelPlaceholder);
-        appointmentTab.setClosable(false);
-
-        tabLists = new TabPane(personTab, appointmentTab);
+        setUpTab();
 
         browserPanel = new BrowserPanel();
         analyticsDisplay = new AnalyticsDisplay();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        //browserPlaceholder.getChildren().add(analyticsDisplay.getRoot());
+        analyticsDisplay.setVisible(false);
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        browserPlaceholder.setAlignment(Pos.TOP_CENTER);
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPlaceholder.getChildren().add(analyticsDisplay.getRoot());
+
+        setUpListPanel();
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -176,12 +177,51 @@ public class MainWindow extends UiPart<Stage> {
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    /**
+     * Set up tabs and tab pane in {@code MainWindow.fxml}
+     */
+    private void setUpTab() {
+        patientTab.setContent(patientListPanelPlaceholder);
+        patientTab.setClosable(false);
+
+        appointmentTab.setContent(appointmentListPanelPlaceholder);
+        appointmentTab.setClosable(false);
+
+        queueTab.setContent(queuePanelPlaceholder);
+        queueTab.setClosable(false);
+
+        tabLists = new TabPane(patientTab, appointmentTab, queueTab);
+    }
+
+    /**
+     * Set up all the list panel in {@code MainWindow}.
+     */
+    private void setUpListPanel() {
+        patientListPanel = new PatientListPanel(logic.getFilteredPatientList());
+        patientListPanelPlaceholder.getChildren().add(patientListPanel.getRoot());
+
+        appointmentListPanel = new AppointmentListPanel(logic.getFilteredAppointmentList());
+        appointmentListPanelPlaceholder.getChildren().add(appointmentListPanel.getRoot());
+
+        queuePanel = new QueuePanel(logic.getAllPatientsInQueue());
+        queuePanelPlaceholder.getChildren().add(queuePanel.getRoot());
+    }
+
+    //@@author iamjackslayer
+    /**
+     * Switches the current tab to the tab of given index.
+     * @param index The index position of the tab
+     */
+    public void switchTab(int index) {
+        tabLists.getSelectionModel().clearAndSelect(index);
+    }
+
     void hide() {
         primaryStage.hide();
     }
 
-    public void setPersonListPanel(ObservableList<Person> list) {
-        personListPanel = new PersonListPanel(list);
+    public void setPatientListPanel(ObservableList<Patient> list) {
+        patientListPanel = new PatientListPanel(list);
     }
 
     private void setTitle(String appTitle) {
@@ -241,8 +281,26 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public PatientListPanel getPatientListPanel() {
+        return patientListPanel;
+    }
+
+    @Subscribe
+    private void handleAnalyticsDisplayEvent(AnalyticsDisplayEvent event) {
+        analyticsDisplay.setVisible(true);
+        browserPanel.setVisible(false);
+    }
+
+    @Subscribe
+    private void handleAppointmentPanelSelectionChangedEvent(AppointmentPanelSelectionChangedEvent event) {
+        analyticsDisplay.setVisible(false);
+        browserPanel.setVisible(true);
+    }
+
+    @Subscribe
+    private void handlePatientPanelSelectionChangedEvent(PatientPanelSelectionChangedEvent event) {
+        analyticsDisplay.setVisible(false);
+        browserPanel.setVisible(true);
     }
 
     @Subscribe

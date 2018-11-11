@@ -98,7 +98,7 @@ public class AppointmentTest {
         //same obj
         assertTrue(appt.isSameDoctor(appt));
 
-        //diff fields, same staff
+        //diff fields, same staff -> returns true
         assertTrue(appt.isSameDoctor(appt2));
 
         //diff staff

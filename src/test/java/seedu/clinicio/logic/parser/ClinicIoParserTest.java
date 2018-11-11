@@ -9,7 +9,8 @@ import static seedu.clinicio.logic.commands.CommandTestUtil.VALID_PASSWORD_ADAM;
 import static seedu.clinicio.logic.commands.CommandTestUtil.VALID_PASSWORD_ALAN;
 import static seedu.clinicio.model.staff.Role.DOCTOR;
 import static seedu.clinicio.model.staff.Role.RECEPTIONIST;
-import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_MEDICINE;
+import static seedu.clinicio.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static seedu.clinicio.testutil.TypicalPersons.ADAM;
 import static seedu.clinicio.testutil.TypicalPersons.ALAN;
 
@@ -22,11 +23,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.clinicio.logic.commands.AddCommand;
+import seedu.clinicio.logic.commands.AddMedicineCommand;
 import seedu.clinicio.logic.commands.AddPatientCommand;
 import seedu.clinicio.logic.commands.AppointmentStatisticsCommand;
 import seedu.clinicio.logic.commands.CancelApptCommand;
 import seedu.clinicio.logic.commands.ClearCommand;
 import seedu.clinicio.logic.commands.DeleteCommand;
+import seedu.clinicio.logic.commands.DeleteMedicineCommand;
 import seedu.clinicio.logic.commands.DequeueCommand;
 import seedu.clinicio.logic.commands.DoctorStatisticsCommand;
 import seedu.clinicio.logic.commands.EditCommand;
@@ -37,25 +40,32 @@ import seedu.clinicio.logic.commands.ExportPatientsAppointmentsCommand;
 import seedu.clinicio.logic.commands.ExportPatientsCommand;
 import seedu.clinicio.logic.commands.ExportPatientsConsultationsCommand;
 import seedu.clinicio.logic.commands.FindCommand;
+import seedu.clinicio.logic.commands.FindMedicineCommand;
 import seedu.clinicio.logic.commands.HelpCommand;
 import seedu.clinicio.logic.commands.HistoryCommand;
 import seedu.clinicio.logic.commands.ListApptCommand;
 import seedu.clinicio.logic.commands.ListCommand;
+import seedu.clinicio.logic.commands.ListMedicineCommand;
 import seedu.clinicio.logic.commands.LoginCommand;
 import seedu.clinicio.logic.commands.LogoutCommand;
 import seedu.clinicio.logic.commands.PatientStatisticsCommand;
 import seedu.clinicio.logic.commands.RedoCommand;
 import seedu.clinicio.logic.commands.SelectCommand;
+import seedu.clinicio.logic.commands.SelectMedicineCommand;
 import seedu.clinicio.logic.commands.ShowPatientInQueueCommand;
 import seedu.clinicio.logic.commands.UndoCommand;
 import seedu.clinicio.logic.parser.exceptions.ParseException;
 import seedu.clinicio.model.appointment.AppointmentContainsDatePredicate;
+import seedu.clinicio.model.medicine.Medicine;
+import seedu.clinicio.model.medicine.MedicineNameContainsKeywordsPredicate;
 import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.person.NameContainsKeywordsPredicate;
 import seedu.clinicio.model.person.Person;
 import seedu.clinicio.model.staff.Password;
 import seedu.clinicio.model.staff.Staff;
 import seedu.clinicio.testutil.EditPersonDescriptorBuilder;
+import seedu.clinicio.testutil.MedicineBuilder;
+import seedu.clinicio.testutil.MedicineUtil;
 import seedu.clinicio.testutil.PatientBuilder;
 import seedu.clinicio.testutil.PatientUtil;
 import seedu.clinicio.testutil.PersonBuilder;
@@ -79,8 +89,8 @@ public class ClinicIoParserTest {
     @Test
     public void parseCommand_cancelAppt() throws Exception {
         CancelApptCommand command = (CancelApptCommand) parser.parseCommand(
-                CancelApptCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new CancelApptCommand(INDEX_FIRST_PERSON), command);
+                CancelApptCommand.COMMAND_WORD + " " + INDEX_FIRST_PATIENT.getOneBased());
+        assertEquals(new CancelApptCommand(INDEX_FIRST_PATIENT), command);
     }
 
     @Test
@@ -88,6 +98,14 @@ public class ClinicIoParserTest {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommand_addMedicine() throws Exception {
+        Medicine medicine = new MedicineBuilder().build();
+        AddMedicineCommand command =
+                (AddMedicineCommand) parser.parseCommand(MedicineUtil.getAddMedicineCommand(medicine));
+        assertEquals(new AddMedicineCommand(medicine), command);
     }
 
     @Test
@@ -107,8 +125,15 @@ public class ClinicIoParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PATIENT.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_PATIENT), command);
+    }
+
+    @Test
+    public void parseCommand_deleteMedicine() throws Exception {
+        DeleteMedicineCommand command = (DeleteMedicineCommand) parser.parseCommand(
+                DeleteMedicineCommand.COMMAND_WORD + " " + INDEX_FIRST_MEDICINE.getOneBased());
+        assertEquals(new DeleteMedicineCommand(INDEX_FIRST_MEDICINE), command);
     }
 
     @Test
@@ -116,9 +141,9 @@ public class ClinicIoParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil
+                + INDEX_FIRST_PATIENT.getOneBased() + " " + PersonUtil
                 .getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+        assertEquals(new EditCommand(INDEX_FIRST_PATIENT, descriptor), command);
     }
 
     @Test
@@ -133,6 +158,15 @@ public class ClinicIoParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_findMedicine() throws Exception {
+        List<String> keywords = Arrays.asList("paracetamol", "oracort", "ventolin");
+        FindMedicineCommand command = (FindMedicineCommand) parser.parseCommand(
+                FindMedicineCommand.COMMAND_WORD + " "
+                        + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindMedicineCommand(new MedicineNameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
@@ -189,6 +223,13 @@ public class ClinicIoParserTest {
     }
 
     @Test
+    public void parseCommand_listMedicine() throws Exception {
+        assertTrue(parser.parseCommand(ListMedicineCommand.COMMAND_WORD) instanceof ListMedicineCommand);
+        assertTrue(parser.parseCommand(ListMedicineCommand.COMMAND_WORD + " 3")
+                instanceof ListMedicineCommand);
+    }
+
+    @Test
     public void parseCommand_patientStatistics() throws Exception {
         assertTrue(parser
                 .parseCommand(PatientStatisticsCommand.COMMAND_WORD) instanceof PatientStatisticsCommand);
@@ -242,8 +283,15 @@ public class ClinicIoParserTest {
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PATIENT.getOneBased());
+        assertEquals(new SelectCommand(INDEX_FIRST_PATIENT), command);
+    }
+
+    @Test
+    public void parseCommand_selectMedicine() throws Exception {
+        SelectMedicineCommand command = (SelectMedicineCommand) parser.parseCommand(
+                SelectMedicineCommand.COMMAND_WORD + " " + INDEX_FIRST_MEDICINE.getOneBased());
+        assertEquals(new SelectMedicineCommand(INDEX_FIRST_MEDICINE), command);
     }
 
     @Test
@@ -261,15 +309,15 @@ public class ClinicIoParserTest {
     @Test
     public void parserCommand_enqueueCommand() throws Exception {
         EnqueueCommand command = (EnqueueCommand) parser.parseCommand(
-                EnqueueCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new EnqueueCommand(INDEX_FIRST_PERSON), command);
+                EnqueueCommand.COMMAND_WORD + " " + INDEX_FIRST_PATIENT.getOneBased());
+        assertEquals(new EnqueueCommand(INDEX_FIRST_PATIENT), command);
     }
 
     @Test
     public void parserCommand_dequeueCommand() throws Exception {
         DequeueCommand command = (DequeueCommand) parser.parseCommand(
-                DequeueCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DequeueCommand(INDEX_FIRST_PERSON), command);
+                DequeueCommand.COMMAND_WORD + " " + INDEX_FIRST_PATIENT.getOneBased());
+        assertEquals(new DequeueCommand(INDEX_FIRST_PATIENT), command);
     }
 
     @Test
@@ -294,4 +342,5 @@ public class ClinicIoParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
 }

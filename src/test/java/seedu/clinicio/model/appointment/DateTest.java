@@ -84,12 +84,6 @@ public class DateTest {
     }
 
     @Test
-    public void isCurrentWeek() {
-        Date date = new Date(2, 2, 2000);
-        assertFalse(date.isCurrentWeek());
-    }
-
-    @Test
     public void isValidFebDay() {
         assertTrue(Date.isValidFebDay(22, 2000));
     }

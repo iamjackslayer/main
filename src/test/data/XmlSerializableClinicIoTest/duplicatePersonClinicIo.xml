@@ -17,4 +17,23 @@
         <address>4th street</address>
     </persons>
 
+    <medicines>
+        <medicineName>Paracetamol</medicineName>
+        <medicineType>Tablet</medicineType>
+        <effectiveDosage>12345</effectiveDosage>
+        <lethalDosage>8</lethalDosage>
+        <price>0.05</price>
+        <quantity>1000</quantity>
+    </medicines>
+
+    <!-- Medicine with same identity as Paracetamol -->
+    <medicines>
+        <medicineName>Paracetamol</medicineName>
+        <medicineType>Tablet</medicineType>
+        <effectiveDosage>12345</effectiveDosage>
+        <lethalDosage>8</lethalDosage>
+        <price>0.09</price>
+        <quantity>300</quantity>
+    </medicines>
+
 </clinicio>

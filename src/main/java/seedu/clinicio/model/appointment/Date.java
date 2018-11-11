@@ -6,9 +6,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.clinicio.commons.util.AppUtil.checkArgument;
 import static seedu.clinicio.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Objects;
 
 /**
@@ -131,30 +128,6 @@ public class Date {
         return string.matches(YEAR_VALIDATION_REGEX);
     }
 
-    /**
-     * Checks if this {@code Date} falls in the current real life week.
-     * @return {@code true} if date is after or equals to current week's Monday AND before next week's monday.
-     * {@code false} otherwise.
-     * @@author arsalanc-v2
-     */
-    public boolean isCurrentWeek() {
-        LocalDate today = LocalDate.now();
-        // get this week's Monday's date
-        LocalDate currentWeekMonday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        // get next week's Monday's date
-        LocalDate nextWeekMonday = today.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-        LocalDate targetDate = LocalDate.of(this.year, this.month, this.day);
-
-        return (targetDate.isEqual(currentWeekMonday) || targetDate.isAfter(currentWeekMonday))
-            && targetDate.isBefore(nextWeekMonday);
-    }
-
-    /**
-     * Returns a simple string
-     * @param other
-     * @return
-     */
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -183,6 +156,21 @@ public class Date {
                 .append(getMonth())
                 .append("/")
                 .append(getYear());
+        return builder.toString();
+    }
+
+    /**
+     * @return the date without labels.
+     */
+    public String toStringNoLabel() {
+        final StringBuilder builder = new StringBuilder();
+        builder
+            .append(getDay())
+            .append("/")
+            .append(getMonth())
+            .append("/")
+            .append(getYear());
+
         return builder.toString();
     }
 }

@@ -13,4 +13,7 @@ public class Messages {
             + "is invalid";
     public static final String MESSAGE_APPOINTMENTS_LISTED_OVERVIEW = "%1$d appointments listed!";
 
+    public static final String MESSAGE_INVALID_MEDICINE_DISPLAYED_INDEX = "The medicine index provided is invalid";
+    public static final String MESSAGE_MEDICINE_OVERVIEW = "%1$d medicine details listed!";
+
 }

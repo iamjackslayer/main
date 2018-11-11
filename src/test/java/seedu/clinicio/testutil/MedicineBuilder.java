@@ -14,12 +14,12 @@ import seedu.clinicio.model.medicine.MedicineType;
  */
 public class MedicineBuilder {
 
-    public static final String DEFAULT_MEDICINE_NAME = "Paracetamol";
-    public static final String DEFAULT_MEDICINE_TYPE = "Tablet";
-    public static final String DEFAULT_EFFECTIVE_DOSAGE = "2";
-    public static final String DEFAULT_LETHAL_DOSAGE = "8";
-    public static final String DEFAULT_PRICE = "0.05";
-    public static final String DEFAULT_QUANTITY = "1000";
+    public static final String DEFAULT_MEDICINE_NAME = "Bonjela";
+    public static final String DEFAULT_MEDICINE_TYPE = "Topical";
+    public static final String DEFAULT_EFFECTIVE_DOSAGE = "10";
+    public static final String DEFAULT_LETHAL_DOSAGE = "60";
+    public static final String DEFAULT_PRICE = "8.75";
+    public static final String DEFAULT_QUANTITY = "350";
 
     private MedicineName medicineName;
     private MedicineType type;

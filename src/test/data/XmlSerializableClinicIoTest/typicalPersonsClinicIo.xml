@@ -67,4 +67,36 @@
         <name>Frank Tay</name>
         <password>$2a$08$y9vtjkky9/YxP3WRXtgb3.7ECtblD8c0YsNXX4CrM8p49XjwUkwh6</password>
     </staffs>
+    <medicines>
+        <medicineName>Paracetamol</medicineName>
+        <medicineType>Tablet</medicineType>
+        <effectiveDosage>2</effectiveDosage>
+        <lethalDosage>8</lethalDosage>
+        <price>0.05</price>
+        <quantity>1000</quantity>
+    </medicines>
+    <medicines>
+        <medicineName>Chlorpheniramine</medicineName>
+        <medicineType>Liquid</medicineType>
+        <effectiveDosage>5</effectiveDosage>
+        <lethalDosage>32</lethalDosage>
+        <price>18.90</price>
+        <quantity>700</quantity>
+    </medicines>
+    <medicines>
+        <medicineName>Oracort</medicineName>
+        <medicineType>Topical</medicineType>
+        <effectiveDosage>4</effectiveDosage>
+        <lethalDosage>30</lethalDosage>
+        <price>8.90</price>
+        <quantity>200</quantity>
+    </medicines>
+    <medicines>
+        <medicineName>Ventolin</medicineName>
+        <medicineType>Inhaler</medicineType>
+        <effectiveDosage>3</effectiveDosage>
+        <lethalDosage>10</lethalDosage>
+        <price>13.55</price>
+        <quantity>500</quantity>
+    </medicines>
 </clinicio>

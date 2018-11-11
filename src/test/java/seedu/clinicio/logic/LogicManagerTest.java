@@ -65,6 +65,12 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void getFilteredMedicineList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        logic.getFilteredMedicineList().remove(0);
+    }
+
+    @Test
     public void getAllPatientsInQueue_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         logic.getAllPatientsInQueue().remove(0);

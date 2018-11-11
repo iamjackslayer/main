@@ -17,9 +17,11 @@ import org.junit.rules.TemporaryFolder;
 import seedu.clinicio.commons.util.FileUtil;
 import seedu.clinicio.model.util.ExportUtil;
 
+//@@author arsalanc-v2
+
 /**
  *  Tests for the ExportUtil class.
- * @@author arsalanc-v2
+ *  Actual files are declared individually in methods due to the possible IOException.
  */
 public class ExportUtilTest {
 

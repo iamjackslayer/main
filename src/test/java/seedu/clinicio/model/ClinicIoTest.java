@@ -425,6 +425,11 @@ public class ClinicIoTest {
         }
 
         @Override
+        public ObservableList<Patient> getQueue() {
+            return patients;
+        }
+
+        @Override
         public ObservableList<Person> getPersonList() {
             return persons;
         }

@@ -22,8 +22,6 @@ import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.staff.Role;
 import seedu.clinicio.model.staff.Staff;
 
-//@@author arsalanc-v2
-
 /**
  * Responsible for all statistics related to doctors.
  */
@@ -72,47 +70,84 @@ public class DoctorStatistics extends Statistics {
     }
 
     /**
-     * Calculate the number of consultations for various time periods
+     * Calculate the average number of consultations per doctor for various time periods
      * Add these to be displayed as a summary.
      */
     @Override
     public void computeSummaryData() {
-        List<Date> consultationDates = consultations.stream()
-            .map(consultation -> consultation.getConsultationDate())
-            .collect(Collectors.toList());
-
-        // calculate consultation numbers
-        int consultationsToday = DateTimeUtil.today(consultationDates);
-        int consultationsWeek = DateTimeUtil.currentWeek(consultationDates);
-        int consultationsMonth = DateTimeUtil.currentMonth(consultationDates);
-        int consultationsYear = DateTimeUtil.currentYear(consultationDates);
+        List<Date> consultationDates = getConsultationDates();
+        List<Integer> consultaionTotalValues = computeSummaryTotals(consultationDates);
 
         int numberOfDoctors = doctors.size();
-
         if (numberOfDoctors > 0) {
-            // calculate averages
-            int consultationsTodayPerDoctor = consultationsToday / numberOfDoctors;
-            int consultationsWeekPerDoctor = consultationsWeek / numberOfDoctors;
-            int consultationsMonthPerDoctor = consultationsMonth / numberOfDoctors;
-            int consultationsYearPerDoctor = consultationsYear / numberOfDoctors;
-
-            List<Integer> values = Arrays.asList(consultationsTodayPerDoctor, consultationsWeekPerDoctor,
-                consultationsMonthPerDoctor, consultationsYearPerDoctor);
+            List<Integer> consultationAverageValues = consultaionTotalValues.stream()
+                .map(value -> value / numberOfDoctors)
+                .collect(Collectors.toList());
 
             // update store of calculated values
-            statData.updateSummary(SUMMARY_TITLE, defaultSummaryTexts, values);
+            statData.updateSummary(SUMMARY_TITLE, defaultSummaryTexts, consultationAverageValues);
         }
     }
 
     @Override
     public void computeVisualizationData() {
         plotPreferencesPerDoctorCount();
+        plotConsultationsPerDoctorCount();
+    }
+
+    /**
+     * @return a list of all consultation dates.
+     */
+    public List<Date> getConsultationDates() {
+        return consultations.stream()
+            .map(consultation -> consultation.getConsultationDate())
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Add each doctor's patient preference count to be visualized.
+     */
+    public void plotPreferencesPerDoctorCount() {
+        List<Tuple<String, Integer>> preferencesDataPoints = preferencesPerDoctorCount();
+
+        statData.addVisualization("doctorPreferences", ChartType.HORIZONTAL_BAR, false,
+            "Number of patient preferences for each doctor", "Doctor", "Number of patients",
+            Arrays.asList(preferencesDataPoints), Arrays.asList(""));
+    }
+
+    /**
+     * Add each doctor's number of consultations to be visualized.
+     */
+    public void plotConsultationsPerDoctorCount() {
+        statData.addVisualization("doctorConsultations", ChartType.HORIZONTAL_BAR, false,
+            "Number of consultations for each doctor", "Doctor", "Number of consultations",
+            Arrays.asList(getConsultationsPerDoctorCount()), Arrays.asList(""));
+    }
+
+    /**
+     * Counts the number of patients who prefer each doctor.
+     * @return A list of tuples with the key being a doctor's name and the value being the number of patients who have
+     * a preference for that particular doctor.
+     */
+    public List<Tuple<String, Integer>> preferencesPerDoctorCount() {
+        List<Tuple<String, Integer>> prefCounts = new ArrayList<Tuple<String, Integer>>();
+        for (Staff doctor : doctors) {
+            long count = patients.stream()
+                .filter(patient -> patient.getPreferredDoctor()
+                    .map(prefDoc -> prefDoc.equals(doctor))
+                    .orElse(false))
+                .count();
+
+            prefCounts.add(new Tuple<String, Integer>(doctor.getName().toString(), toIntExact(count)));
+        }
+
+        return prefCounts;
     }
 
     /**
      * Computes the number of consultations per doctor.
      */
-    public Map<String, Integer> consultationsPerDoctor() {
+    public List<Tuple<String, Integer>> getConsultationsPerDoctorCount() {
         Map<String, Integer> consultationCounts = consultations.stream()
             .map(consultation -> consultation.getDoctor())
             // remove non doctor staff
@@ -131,38 +166,7 @@ public class DoctorStatistics extends Statistics {
 
         // remove non doctor staff
         consultationCounts.remove("otherstaff");
-        return consultationCounts;
-    }
-
-    /**
-     * Add each doctor's patient preference count to be visualized.
-     */
-    public void plotPreferencesPerDoctorCount() {
-        List<Tuple<String, Integer>> preferencesDataPoints = preferencesPerDoctorCount();
-
-        statData.addCategoricalVisualization("doctorPreferences", ChartType.HORIZONTAL_BAR,
-            "Number of patient preferences for each doctor", "Number of patients", "Doctor",
-            getAllDoctorNames(), Arrays.asList(preferencesDataPoints), Arrays.asList(""));
-    }
-
-    /**
-     * Counts the number of patients who prefer each doctor.
-     * @return A list of tuples with the key being a doctor's name and the value being the number of patients who have
-     * a preference for him or her.
-     */
-    public List<Tuple<String, Integer>> preferencesPerDoctorCount() {
-        List<Tuple<String, Integer>> prefCounts = new ArrayList<Tuple<String, Integer>>();
-        for (Staff doctor : doctors) {
-            long count = patients.stream()
-                .filter(patient -> patient.getPreferredDoctor()
-                    .map(prefDoc -> prefDoc.equals(doctor))
-                    .orElse(false))
-                .count();
-
-            prefCounts.add(new Tuple<String, Integer>(doctor.getName().toString(), toIntExact(count)));
-        }
-
-        return prefCounts;
+        return getTupleDataCategorical(consultationCounts);
     }
 
     /**

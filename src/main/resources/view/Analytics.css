@@ -21,6 +21,18 @@
     -fx-background-color: #6593F5;
 }
 
+.visualization-button {
+    -fx-background-color: #fff;
+    -fx-border-color: #0F52BA;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2px;
+}
+
+.visualization-button:hover {
+    -fx-background-color: #0F52BA;
+    -fx-text-fill: #fff;
+}
+
 .chart {
     -fx-text-fill: #fff;
     -fx-font-family: "Avenir";
@@ -53,11 +65,12 @@
 }
 
 #apptSupplyDemand .series0.chart-bar {
-    -fx-background-color: #CA3433;
+    -fx-bar-fill: #CA3433;
+
 }
 
 #apptSupplyDemand .series1.chart-bar {
-    -fx-background-color: #00A572;
+    -fx-bar-fill: #00A572;
 }
 
 #doctorPreferences .chart-bar {

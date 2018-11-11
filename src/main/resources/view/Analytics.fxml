@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="analyticsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" styleClass="dashboard" stylesheets="@Analytics.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="analyticsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1000.0" styleClass="dashboard" stylesheets="@Analytics.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="summaryBar" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="20.0">
+      <Label fx:id="summaryBar" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font name="Avenir Light" size="18.0" />
          </font>
       </Label>
-      <AnchorPane id="numbers-pane" layoutX="93.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="900.0" styleClass="summary-pane" AnchorPane.bottomAnchor="565.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0">
+      <AnchorPane id="numbers-pane" layoutX="93.0" layoutY="23.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="900.0" styleClass="summary-pane" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="675.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label fx:id="summaryTextOne" alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="118.0" text="Today" textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="120.0">
                      <font>
@@ -27,7 +28,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="totalsSummaryTwo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="totalsSummaryTwo" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label fx:id="summaryValueTwo" alignment="CENTER" contentDisplay="CENTER" layoutX="61.0" layoutY="26.0" styleClass="summary-value" text="0" textAlignment="CENTER" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                      <font>
@@ -41,7 +42,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="totalsSummaryThree" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="totalsSummaryThree" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label fx:id="summaryValueThree" alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="26.0" styleClass="summary-value" text="0" textAlignment="CENTER" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                      <font>
@@ -55,7 +56,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="totalsSummaryFour" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="675.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="totalsSummaryFour" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="225.0" styleClass="summary-element" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="675.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="93.0" textAlignment="CENTER" textFill="#cccccc">
                      <font>
@@ -76,10 +77,20 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane id="visualization-pane" fx:id="visualizationPane" layoutX="50.0" layoutY="299.0" prefHeight="440.0" prefWidth="900.0" styleClass="visualization-pane" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="299.0">
+      <AnchorPane id="visualization-pane" fx:id="visualizationPane" layoutX="50.0" layoutY="299.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="900.0" styleClass="visualization-pane" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="250.0">
          <children>
             <AnchorPane fx:id="chartPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0" />
          </children>
       </AnchorPane>
+      <Button fx:id="nextVisualizationButton" alignment="CENTER" contentDisplay="CENTER" layoutX="890.0" layoutY="695.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleNextVisualization" prefHeight="25.0" prefWidth="60.0" styleClass="visualization-button" text="Next" textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font name="Avenir Book" size="10.0" />
+         </font>
+      </Button>
+      <Button fx:id="previousVisualizationButton" alignment="CENTER" contentDisplay="CENTER" layoutX="822.0" layoutY="695.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePreviousVisualization" prefHeight="25.0" prefWidth="60.0" styleClass="visualization-button" text="Previous" textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="118.0">
+         <font>
+            <Font name="Avenir Book" size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

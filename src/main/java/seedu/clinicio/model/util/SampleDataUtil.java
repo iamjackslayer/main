@@ -21,6 +21,8 @@ import seedu.clinicio.model.medicine.MedicineType;
 import seedu.clinicio.model.patient.Allergy;
 import seedu.clinicio.model.patient.MedicalProblem;
 import seedu.clinicio.model.patient.Medication;
+import seedu.clinicio.model.patient.Nric;
+import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.person.Address;
 import seedu.clinicio.model.person.Email;
 import seedu.clinicio.model.person.Name;
@@ -59,7 +61,26 @@ public class SampleDataUtil {
         };
     }
 
-    //@@author jjlee050
+    public static Patient[] getSamplePatients() {
+        return new Patient[] {
+            new Patient(new Name("Ang Chen Mee"), new Nric("S8919203A"),
+                    new Phone("80199102"), new Email("acm@live.com"),
+                    new Address("ACM Ave 1, #02-12"),
+                    getMedicalProblemSet(), getMedicationSet(), getAllergySet(),
+                    getSampleStaffs().get(0)),
+            new Patient(new Name("Benny Low Tin"), new Nric("T1152901A"),
+                    new Phone("93112443"), new Email("bennylt@live.com"),
+                    new Address("331, Jurong Ave 1, #12-36"),
+                    getMedicalProblemSet(), getMedicationSet(), getAllergySet("dairy products"),
+                    getSampleStaffs().get(0)),
+            new Patient(new Name("Chen Ah Seng"), new Nric("S6600122J"),
+                    new Phone("91028233"), new Email("cas@live.com"),
+                    new Address("221, Bishan Street 12, #01-12"),
+                    getMedicalProblemSet("Diabetes"), getMedicationSet(), getAllergySet(),
+                    getSampleStaffs().get(1))
+        };
+    }
+
     public static List<Staff> getSampleStaffs() {
         return new ArrayList<>(Arrays.asList(
                 new Staff(DOCTOR, new Name("Adam Bell"),
@@ -97,7 +118,10 @@ public class SampleDataUtil {
             sampleClinicIo.addPerson(samplePerson);
         }
 
-        //@@author jjlee050
+        for (Patient samplePatient: getSamplePatients()) {
+            sampleClinicIo.addPatient(samplePatient);
+        }
+
         for (Staff sampleStaff : getSampleStaffs()) {
             sampleClinicIo.addStaff(sampleStaff);
         }

@@ -39,7 +39,7 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        passwordFormatter = new PasswordPrefixFormatter(commandTextField);
+        passwordFormatter = new PasswordPrefixFormatter();
     }
 
     /**
@@ -56,20 +56,20 @@ public class CommandBox extends UiPart<Region> {
         switch (keyEvent.getCode()) {
         case UP:
             navigateToPreviousInput();
-            formattedText = passwordFormatter.maskPassword(true, false);
+            formattedText = passwordFormatter.maskPassword(commandTextField.getText(), true, false);
             break;
         case DOWN:
             navigateToNextInput();
-            formattedText = passwordFormatter.maskPassword(true, false);
+            formattedText = passwordFormatter.maskPassword(commandTextField.getText(), true, false);
             break;
         case LEFT: case RIGHT: case BACK_SPACE: case SPACE:
-            formattedText = passwordFormatter.maskPassword(false, true);
+            formattedText = passwordFormatter.maskPassword(commandTextField.getText(), false, true);
             break;
         case ENTER:
             return;
         default:
             // let JavaFx handle the keypress
-            formattedText = passwordFormatter.maskPassword(false, false);
+            formattedText = passwordFormatter.maskPassword(commandTextField.getText(), false, false);
             break;
         }
 
@@ -119,7 +119,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandEntered() {
         try {
-            replaceText(passwordFormatter.unmaskPassword());
+            replaceText(passwordFormatter.unmaskPassword(commandTextField.getText()));
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
             historySnapshot.next();
@@ -131,7 +131,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             // handle command failure
             logger.info("Invalid command: " + commandTextField.getText());
-            replaceText(passwordFormatter.maskPassword(false, false));
+            replaceText(passwordFormatter.maskPassword(commandTextField.getText(), false, false));
             setStyleToIndicateCommandFailure();
             raise(new NewResultAvailableEvent(e.getMessage(), false));
         }

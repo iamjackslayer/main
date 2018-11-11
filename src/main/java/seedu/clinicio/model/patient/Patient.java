@@ -243,8 +243,7 @@ public class Patient extends Person {
         boolean isSame = other != null
                 && other.getName().equals(getName())
                 && other.getNric().equals(getNric())
-                && (other.getPhone().equals(getPhone()) || other.getEmail().equals(getEmail()))
-                && other.getPreferredDoctor().equals(getPreferredDoctor());
+                && (other.getPhone().equals(getPhone()) || other.getEmail().equals(getEmail()));
 
         return isSame;
     }

@@ -13,6 +13,7 @@ import seedu.clinicio.model.medicine.MedicineQuantity;
 import seedu.clinicio.model.patient.Patient;
 import seedu.clinicio.model.person.Person;
 import seedu.clinicio.model.staff.Staff;
+import seedu.clinicio.ui.Ui;
 
 /**
  * The API of the Model component.
@@ -43,6 +44,20 @@ public interface Model {
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Medicine> PREDICATE_SHOW_ALL_MEDICINES = unused -> true;
+
+    //@@author iamjackslayer
+    /**
+     * Switches the current tab to the tab of given index.
+     * @param index
+     */
+    void switchTab(int index);
+
+    /**
+     * Add a ui upon which this model depends. There is only one ui.
+     * @param ui
+     */
+    void addUi(Ui ui);
+
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyClinicIo newData);
@@ -75,6 +90,12 @@ public interface Model {
     void deletePerson(Person target);
 
     /**
+     * Deletes the given patient.
+     * The patient must exist in the ClinicIO.
+     */
+    void deletePatient(Patient target);
+
+    /**
      * Adds the given person.
      * {@code person} must not already exist in the ClinicIO.
      */
@@ -105,6 +126,9 @@ public interface Model {
      */
     void updatePerson(Person target, Person editedPerson);
 
+    // @@author iamjackslayer
+    ObservableList<Patient> getAllPatientsInQueue();
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -114,8 +138,11 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered staff list */
     ObservableList<Staff> getFilteredStaffList();
 
-    // @@author iamjackslayer
-    ObservableList<Person> getAllPatientsInQueue();
+    /**
+     * Updates the filter of the queue by the given {@code predicate}
+     * @param predicate
+     */
+    void updateQueue(Predicate<Patient> predicate);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
