@@ -40,7 +40,6 @@ Lastly, I am the main tester of ClinicIO. I ensure all the components are integr
 ==== Major enhancement 2 - added the ability to remove a patient from the queue:
 ** *What it does:* It allows the user - typically a receptionist - to remove a patient from the queue based on the index of the patient in the patient display list.
 ** *Justification:* This feature improves the product significantly because the user can carry out his/her daily routine, in particular removing a patient from the queue, more efficiently without affecting existing patients in the queue.
-** *Highlight:* This enhancement is tied to the existing list of patients registered in the ClinicIO database. Any patient removed from the database will be automatically removed from the queue. The implementation is challenging as it must always be responsive to any events triggered. For example, when a patient is removed, the list of patients in the queue will be immediately updated and displayed.
 ** *Code snippet for dequeuing a patient:* +
 `model.dequeue((Patient) patientToDequeue);`
 
