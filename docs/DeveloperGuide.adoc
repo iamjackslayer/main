@@ -274,9 +274,8 @@ When a room is available, the system will look for the first patient in the `pre
 It will then compare this patient with the frontmost patient from the `mainQueue` on their arrival time. The patient who arrives
 earlier will get to consult the doctor. +
 
-Both queues are composed of `java#ArrayList` as it provides richer functionalities compared to `java#Queue` to manipulate items in the list.
-This allows the system to handle the situation where a patient in the middle of the queue decides to leave the queue.
-In that case, the receptionist, who is the end user of ClinicIO, can simply type in a command to remove the patient from the queue. +
+Both queues are composed of `java#ArrayList`.
+This allows the system to handle the situation where a patient in the middle of the queue decides to leave the queue. +
 
 The implemented operations for Queue are: +
 

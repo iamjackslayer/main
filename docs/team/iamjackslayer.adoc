@@ -61,22 +61,17 @@ image::popqueue.png[]
 ==== Major enhancement 5 - designed the Patient model:
 ** *What it does:* It represents the patient in digital format.
 ** *Justification:* This feature is crucial because it allows the receptionist to store all relevant information associated with a patient into our database. This allows the receptionist to easily query a patient given some information about the patient.
-** *Highlight:* This patient model is designed to scale, that is, when the clinic requires to add more information or attributes of a patient, the feature can be easily implemented without affecting the existing database.
 ** *Class diagram for a patient:* +
 
 image::patientmodel.png[]
 
 
 ==== Codes contributed:
-This subsection provides the link to the relevant source codes I am responsible for writing.
-*** Url link to *all codes* I have written (RepoSense dashboard):
+This subsection provides the link to the relevant source codes I am responsible for writing. +
+
+*** Url link to *all codes* I have written (RepoSense dashboard): +
 https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=iamjackslayer&sort=displayName&since=2018-09-30&until=2018-11-11&timeframe=day&reverse=false&repoSort=true
-*** Url link to *Patient model*'s codes: https://github.com/CS2103-AY1819S1-W14-1/main/tree/master/src/main/java/seedu/clinicio/model/patient
-*** Url link to *Queue model*'s codes: https://github.com/CS2103-AY1819S1-W14-1/main/tree/master/src/main/java/seedu/clinicio/model/patientqueue
-*** Url link to *Queue command*'s codes:
-**** Command to assign a patient into the queue: https://github.com/CS2103-AY1819S1-W14-1/main/blob/master/src/main/java/seedu/clinicio/logic/commands/EnqueueCommand.java
-**** Command to remove a patient from the queue: https://github.com/CS2103-AY1819S1-W14-1/main/blob/master/src/main/java/seedu/clinicio/logic/commands/DequeueCommand.java
-**** Command to show all patients in the queue: https://github.com/CS2103-AY1819S1-W14-1/main/blob/master/src/main/java/seedu/clinicio/logic/commands/ShowPatientInQueueCommand.java
+
 
 ==== Other contributions: +
 This subsection lists some aspects of the entire project I am responsible for contributing. These contributions reflect my role as an assistant team lead for the project and also my technical responsibility as the main tester for the software. Furthermore, this subsection lists some of my contributions beyond our team.
