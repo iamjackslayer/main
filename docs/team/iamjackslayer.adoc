@@ -1,4 +1,3 @@
-//@@author iamjackslayer
 = Jack Wong - Project Portfolio
 :site-section: AboutUs
 :imagesDir: ../images
@@ -13,17 +12,15 @@ This portfolio serves the purpose of documenting my contributions to the project
 
 Our team consists of three primary developers, an assistant team lead and a team lead. As an assistant team lead, I assist the team lead in the overall project coordination. Furthermore, I am responsible for the logic component of the software.
 
-In this project, I have designed and developed some crucial features of the software which are listed below: +
+In this project, I have designed and developed some crucial features of the software such as
+_assigning a patient into the queue_, _removing a particular patient from the queue_
+and _showing all the patients in the queue_.
 
-* Assign a patient into the queue
-* Remove a particular patient from the queue
-* Show all the patients in the queue
+I worked mainly on _designing the queue_ and the _algorithm of the queueing system_. This system aims to achieve fairness, efficiency and flexibility.
 
-I worked mainly on designing the queue and the algorithm of the queueing system. This system aims to achieve fairness, efficiency and flexibility.
+Besides queue, I have _designed the model for a patient_ so that the data associated with patients can be stored efficiently in our database.
 
-Besides queue, I have designed the model for a patient so that the data associated with patients can be stored efficiently in our database.
-
-Lastly, I am the main tester of ClinicIO. I ensure all the components are integrated properly and thoroughly tested before the software is deployed.
+Lastly, I am the main tester of ClinicIO. I _ensure all the components are integrated properly and thoroughly tested_ before the software is deployed.
 
 
 == 2. Summary of contributions
@@ -33,18 +30,17 @@ Lastly, I am the main tester of ClinicIO. I ensure all the components are integr
 ==== Major enhancement 1 - added the ability to assign a patient into the queue:
 ** *What it does:* It allows the user to assign a patient into the queue based on the index of the patient in the patient display list.
 ** *Justification:* This feature improves the product significantly because a user - typically a receptionist - needs to routinely place patients into the queue.
-** *Highlight:* This enhancement required an in-depth analysis of design alternatives. The implementation too was challenging as it required a new data structure to save the queue into the hard disk. Besides, it must always reflect the latest status of the queue.
 ** *Code snippet for enqueuing a patient:* +
 `model.enqueue((Patient) patientToEnqueue);`
 
 ==== Major enhancement 2 - added the ability to remove a patient from the queue:
-** *What it does:* It allows the user - typically a receptionist - to remove a patient from the queue based on the index of the patient in the patient display list.
-** *Justification:* This feature improves the product significantly because the user can carry out his/her daily routine, in particular removing a patient from the queue, more efficiently without affecting existing patients in the queue.
+** *What it does:* It allows the user to remove a patient from the queue based on the patient's index.
+** *Justification:* This feature improves the product significantly because the user can carry out his/her daily routine more efficiently without affecting existing patients in the queue.
 ** *Code snippet for dequeuing a patient:* +
 `model.dequeue((Patient) patientToDequeue);`
 
 ==== Major enhancement 3 - designed the preference-based queuing algorithm:
-** *What it does:* It determines which patient in the queue to go for consultation based on his/her preference for any doctor.
+** *What it does:* It assigns a patient's queuing priority based on his/her preference for any doctor.
 ** *Justification:* This feature serves the need of many patients who opt for a specific doctor for consultation. It ensures fairness by prioritising patients who arrive earlier.
 ** *Activity diagram for selecting a patient for consultation:* +
 
@@ -85,7 +81,8 @@ Url link to ClinicIO Board: https://github.com/CS2103-AY1819S1-W14-1/main/projec
 **** Example review: https://github.com/CS2103-AY1819S1-W14-1/main/pull/106
 ** Documentation:
 *** Updated the class diagram for Model component in the Developer Guide:
-**** Url link: https://github.com/CS2103-AY1819S1-W14-1/main/blob/master/docs/DeveloperGuide.adoc#24-model-component
+**** Url link: +
+https://github.com/CS2103-AY1819S1-W14-1/main/blob/master/docs/DeveloperGuide.adoc#24-model-component
 ** Community:
 *** Reviewed PRs (Pull Requests) of team members:
 **** Url link: https://github.com/CS2103-AY1819S1-W14-1/main/pull/105
@@ -95,7 +92,10 @@ Url link to ClinicIO Board: https://github.com/CS2103-AY1819S1-W14-1/main/projec
 *** Reported bugs and suggestions for another team in the class:
 **** Team T16-4: https://github.com/CS2103-AY1819S1-T16-4/main/issues/171
 **** Team T16-4: https://github.com/CS2103-AY1819S1-T16-4/main/issues/181
-**** Team T16-4: https://github.com/CS2103-AY1819S1-T16-4/main/issues/165
+**** Team T16-4: https://github.com/CS2103-AY1819S1-T16-4/main/issues/165 +
+
+{empty} +
+{empty} +
 
 == 3. Contributions to the User Guide
 
